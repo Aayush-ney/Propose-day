@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>For My Love 💖 | Kaluu</title>
+    <title>For My Love 💖 | Will You Marry Me?</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* MOBILE FIRST DESIGN */
@@ -192,7 +192,7 @@
             text-align: left;
         }
         
-        /* Game Section - WITH BOMBS */
+        /* Game Section */
         .game-area {
             margin: 20px 0;
             width: 100%;
@@ -507,40 +507,101 @@
             border-radius: 50%;
         }
         
-        /* Game Over Screen */
+        /* GAME OVER SCREEN - FIXED */
         .game-over {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             border-radius: 20px;
-            z-index: 20;
+            z-index: 50;
             color: white;
             text-align: center;
-            padding: 20px;
-            display: none;
+            padding: 30px 20px;
+            animation: fadeIn 0.5s ease;
         }
         
         .game-over.active {
             display: flex;
         }
         
+        .game-over-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+        
+        .game-over h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: #ff4d6d;
+        }
+        
+        .game-over p {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+        
+        .game-over-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
         .retry-btn {
             background: #ff4d6d;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 14px 28px;
             border-radius: 25px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .retry-btn:hover {
+            background: #ff3355;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn {
+            background: #36d1dc;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #25c0cc;
+            transform: translateY(-2px);
         }
         
         /* Portrait/Landscape adjustments */
@@ -573,6 +634,23 @@
             .stat-label {
                 font-size: 0.7rem;
             }
+            
+            .game-over {
+                padding: 20px 15px;
+            }
+            
+            .game-over h2 {
+                font-size: 1.8rem;
+            }
+            
+            .game-over p {
+                font-size: 1rem;
+            }
+            
+            .retry-btn, .back-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
         }
         
         @media (min-height: 700px) {
@@ -600,6 +678,10 @@
                 max-width: 400px;
                 margin-left: auto;
                 margin-right: auto;
+            }
+            
+            .game-over-buttons {
+                flex-direction: row;
             }
         }
         
@@ -702,23 +784,32 @@
             
             <div id="heartContainer">
                 <div class="timer" id="timer">40s</div>
-                <div class="game-over" id="gameOver">
-                    <h2 id="gameResult">🎉 You Won!</h2>
-                    <p id="gameMessage">You proved your love! 💖</p>
-                    <button class="retry-btn" id="retryBtn">Try Again 💘</button>
+                <!-- GAME OVER SCREEN - FIXED POSITION -->
+                <div class="game-over" id="gameOverScreen">
+                    <div class="game-over-icon" id="gameOverIcon">🎉</div>
+                    <h2 id="gameResult">🎉 YOU WIN! 💖</h2>
+                    <p id="gameMessage">Congratulations! You proved your love!</p>
+                    <div class="game-over-buttons">
+                        <button class="retry-btn" id="retryBtn">
+                            <i class="fas fa-redo"></i> Play Again
+                        </button>
+                        <button class="back-btn" id="backBtn">
+                            <i class="fas fa-home"></i> Back to Love
+                        </button>
+                    </div>
                 </div>
             </div>
             <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Tap hearts 💖 (+1) | Avoid bombs 💣 (-3)</p>
         </div>
     </div>
 
-    <!-- Audio - Using YOUR music file with multiple formats for compatibility -->
+    <!-- Audio - Using YOUR music file -->
     <audio id="bgMusic" loop>
         <!-- Primary: Your M4A file -->
         <source src="Ji Chanta Matina.m4a" type="audio/mp4">
         <!-- Fallback 1: Try without extension -->
         <source src="Ji Chanta Matina" type="audio/mp4">
-        <!-- Fallback 2: MP3 format (if you convert it) -->
+        <!-- Fallback 2: MP3 format -->
         <source src="Ji Chanta Matina.mp3" type="audio/mpeg">
         <!-- Fallback 3: Online romantic music -->
         <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
@@ -744,10 +835,14 @@
         const timeDisplay = document.getElementById('timeLeft');
         const bombsDisplay = document.getElementById('bombs');
         const timerDisplay = document.getElementById('timer');
-        const gameOverScreen = document.getElementById('gameOver');
+        
+        // GAME OVER ELEMENTS - FIXED SELECTORS
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const gameOverIcon = document.getElementById('gameOverIcon');
         const gameResult = document.getElementById('gameResult');
         const gameMessage = document.getElementById('gameMessage');
         const retryBtn = document.getElementById('retryBtn');
+        const backBtn = document.getElementById('backBtn');
         
         // Game Variables
         let yesClicked = false;
@@ -755,15 +850,16 @@
         let musicPlaying = false;
         let gameActive = false;
         
-        // Game Stats - 40 SECOND TIMER
+        // Game Stats
         let score = 0;
         let timeLeft = 40;
         let bombsHit = 0;
         let gameTimer = null;
+        let objectCreationInterval = null;
         let activeObjects = [];
-        let bombChance = 0.2; // 20% chance for bomb
-        let bombPenalty = 3; // Lose 3 points per bomb
-        let winThreshold = 35; // Need 35 hearts to win
+        let bombChance = 0.2;
+        let bombPenalty = 3;
+        let winThreshold = 35;
         
         // Love messages
         const messages = [
@@ -791,7 +887,7 @@
                 page1.classList.add('active');
             }, 800);
             
-            // Start music immediately with better handling
+            // Start music immediately
             startMusicImmediately();
             
             setupEventListeners();
@@ -799,23 +895,18 @@
             createFloatingHearts();
         }
         
-        // Improved music player
+        // Music player
         function startMusicImmediately() {
-            // Configure audio
             music.volume = 0.7;
             music.muted = false;
             
-            // Show loading message
             showMusicStatus("Loading your song... 🎵");
             
-            // Try to load and play
             music.load();
             
-            // Event listeners for audio
             music.addEventListener('canplaythrough', function() {
                 showMusicStatus("Playing: Ji Chanta Matina 🎶");
                 
-                // Try to play immediately
                 const playPromise = music.play();
                 
                 if (playPromise !== undefined) {
@@ -826,7 +917,6 @@
                     }).catch(error => {
                         console.log("Auto-play prevented:", error);
                         showMusicStatus("Tap to play music 👆");
-                        // Will play on user interaction
                     });
                 }
             });
@@ -843,14 +933,9 @@
             
             music.addEventListener('error', function(e) {
                 console.error("Audio error:", music.error);
-                if (music.error && music.error.code === 4) {
-                    showMusicStatus("Music file not found ❌");
-                } else {
-                    showMusicStatus("Using romantic music 🎵");
-                }
+                showMusicStatus("Using romantic music 🎵");
             });
             
-            // Auto-play on any user interaction
             const enableAudio = () => {
                 if (!musicPlaying) {
                     music.play().then(() => {
@@ -861,10 +946,8 @@
                 }
             };
             
-            // Add multiple interaction listeners
             document.addEventListener('click', enableAudio, { once: true });
             document.addEventListener('touchstart', enableAudio, { once: true });
-            document.addEventListener('keydown', enableAudio, { once: true });
         }
         
         function showMusicStatus(message) {
@@ -893,9 +976,17 @@
             musicToggle.addEventListener('click', toggleMusic);
             musicToggle.addEventListener('touchend', toggleMusic);
             
-            // Retry Button
+            // RETRY BUTTON - FIXED EVENT LISTENER
             retryBtn.addEventListener('click', restartGame);
-            retryBtn.addEventListener('touchend', restartGame);
+            
+            // BACK BUTTON - FIXED EVENT LISTENER
+            backBtn.addEventListener('click', goBackToLove);
+        }
+        
+        // Go back to love messages
+        function goBackToLove() {
+            gameOverScreen.classList.remove('active');
+            switchPage(page3, page2);
         }
         
         // Setup Touch Support
@@ -909,7 +1000,6 @@
             if (yesClicked) return;
             yesClicked = true;
             
-            // Ensure music is playing
             if (!musicPlaying) {
                 music.volume = 0.7;
                 music.play().then(() => {
@@ -918,10 +1008,7 @@
                 });
             }
             
-            // Switch to page 2
             switchPage(page1, page2);
-            
-            // Start typing messages
             typeMessages(0);
         }
         
@@ -1012,7 +1099,7 @@
             typeChar();
         }
         
-        // Start Love Game - WITH BOMBS
+        // Start Love Game
         function startLoveGame() {
             if (gameStarted) return;
             
@@ -1024,50 +1111,65 @@
             bombsHit = 0;
             activeObjects = [];
             
-            // Clear container and recreate
-            heartContainer.innerHTML = '<div class="timer" id="timer">40s</div><div class="game-over" id="gameOver"><h2 id="gameResult">🎉 You Won!</h2><p id="gameMessage">You proved your love! 💖</p><button class="retry-btn" id="retryBtn">Try Again 💘</button></div>';
+            // Clear game over screen
+            gameOverScreen.classList.remove('active');
             
-            // Reattach event listeners
-            document.getElementById('retryBtn').addEventListener('click', restartGame);
-            document.getElementById('retryBtn').addEventListener('touchend', restartGame);
+            // Clear container but keep timer and game over screen
+            const timer = document.querySelector('.timer');
+            const gameOver = document.querySelector('.game-over');
+            heartContainer.innerHTML = '';
+            if (timer) heartContainer.appendChild(timer);
+            if (gameOver) heartContainer.appendChild(gameOver);
             
             // Update displays
             updateStats();
             timerDisplay.textContent = `${timeLeft}s`;
             timerDisplay.className = 'timer';
             
+            // Reset love meter
+            loveMeter.style.width = '0%';
+            loveMeter.textContent = '';
+            
+            // Clear any existing intervals
+            if (gameTimer) clearInterval(gameTimer);
+            if (objectCreationInterval) clearInterval(objectCreationInterval);
+            
             // Start game timer
             gameTimer = setInterval(updateTimer, 1000);
             
-            // Start creating game objects (hearts and bombs)
+            // Start creating game objects
             createGameObjects();
+            
+            // Start object movement
+            startObjectMovement();
         }
         
-        // Create game objects (hearts and bombs)
+        // Create game objects
         function createGameObjects() {
             if (!gameActive) return;
             
-            // Create 2-3 objects at once
-            const objectCount = Math.floor(Math.random() * 2) + 2;
+            // Clear any existing interval
+            if (objectCreationInterval) clearInterval(objectCreationInterval);
             
-            for (let i = 0; i < objectCount; i++) {
-                setTimeout(() => {
-                    if (gameActive) {
-                        // Decide if this is a bomb (20% chance)
-                        const isBomb = Math.random() < bombChance;
-                        createGameObject(isBomb);
-                    }
-                }, i * 300);
-            }
-            
-            // Continue creating objects faster as game progresses
-            const speed = Math.max(500, 1000 - (score * 10)); // Gets faster with score
-            if (gameActive) {
-                setTimeout(createGameObjects, speed);
-            }
+            // Create objects at regular intervals
+            objectCreationInterval = setInterval(() => {
+                if (!gameActive) return;
+                
+                // Create 1-3 objects at once
+                const objectCount = Math.floor(Math.random() * 2) + 1;
+                
+                for (let i = 0; i < objectCount; i++) {
+                    setTimeout(() => {
+                        if (gameActive) {
+                            const isBomb = Math.random() < bombChance;
+                            createGameObject(isBomb);
+                        }
+                    }, i * 200);
+                }
+            }, 800); // Create objects every 800ms
         }
         
-        // Create a single game object (heart or bomb)
+        // Create a single game object
         function createGameObject(isBomb) {
             if (!gameActive) return;
             
@@ -1077,11 +1179,11 @@
             if (isBomb) {
                 object.innerHTML = '💣';
                 object.className = 'game-bomb';
-                object.title = 'Click to avoid! -3 points';
+                object.title = 'Avoid! -3 points';
             } else {
                 object.innerHTML = '💖';
                 object.className = 'game-heart';
-                object.title = 'Click to collect! +1 point';
+                object.title = 'Collect! +1 point';
             }
             
             // Random starting position
@@ -1104,7 +1206,7 @@
                 y: startY,
                 moveX: moveX,
                 moveY: moveY,
-                life: 4000, // 4 seconds lifespan
+                life: 4000,
                 collected: false
             };
             
@@ -1128,11 +1230,6 @@
                 if (!objectData.collected && object.parentNode) {
                     object.remove();
                     activeObjects = activeObjects.filter(obj => obj.id !== id);
-                    
-                    // If it was a heart and wasn't collected, it counts as missed
-                    if (!objectData.isBomb) {
-                        // Optional: You could penalize for missed hearts
-                    }
                 }
             }, objectData.life);
         }
@@ -1144,13 +1241,13 @@
             objectData.collected = true;
             
             if (objectData.isBomb) {
-                // BOMB clicked - PENALTY
-                score = Math.max(0, score - bombPenalty); // Don't go below 0
+                // BOMB clicked
+                score = Math.max(0, score - bombPenalty);
                 bombsHit++;
                 createBombExplosion(objectData.element.getBoundingClientRect());
                 showMusicStatus("Bomb! -3 points 💣");
             } else {
-                // HEART clicked - REWARD
+                // HEART clicked
                 score++;
                 createHeartAnimation(objectData.element.getBoundingClientRect());
             }
@@ -1169,7 +1266,7 @@
             loveMeter.style.width = progress + '%';
             loveMeter.textContent = Math.round(progress) + '%';
             
-            // Check win/lose conditions
+            // Check win condition
             if (score >= winThreshold) {
                 winGame();
             }
@@ -1199,20 +1296,17 @@
                 // Update position
                 obj.element.style.left = obj.x + '%';
                 obj.element.style.top = obj.y + '%';
-                
-                // Random direction change occasionally
-                if (Math.random() < 0.02) {
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.sqrt(obj.moveX * obj.moveX + obj.moveY * obj.moveY);
-                    obj.moveX = Math.cos(angle) * speed;
-                    obj.moveY = Math.sin(angle) * speed;
-                }
             });
             
             // Continue animation
             if (gameActive) {
                 requestAnimationFrame(updateMovingObjects);
             }
+        }
+        
+        // Start object movement
+        function startObjectMovement() {
+            updateMovingObjects();
         }
         
         // Update game stats
@@ -1229,7 +1323,7 @@
             timeLeft--;
             timerDisplay.textContent = `${timeLeft}s`;
             
-            // Update timer styling based on time
+            // Update timer styling
             if (timeLeft <= 10) {
                 timerDisplay.className = 'timer danger';
             } else if (timeLeft <= 20) {
@@ -1238,10 +1332,10 @@
             
             // Increase bomb chance as time runs out
             if (timeLeft <= 20) {
-                bombChance = 0.3; // 30% chance
+                bombChance = 0.3;
             }
             if (timeLeft <= 10) {
-                bombChance = 0.4; // 40% chance
+                bombChance = 0.4;
             }
             
             if (timeLeft <= 0) {
@@ -1249,41 +1343,89 @@
             }
         }
         
-        // Win the game
+        // WIN THE GAME - SHOWS MESSAGE
         function winGame() {
             gameActive = false;
             clearInterval(gameTimer);
+            clearInterval(objectCreationInterval);
             
+            // Set win message
+            gameOverIcon.textContent = '🎉';
             gameResult.textContent = '🎉 YOU WIN! 💖';
-            gameMessage.textContent = `You collected ${score} hearts!\nOnly ${bombsHit} bombs hit!\n Nice bebu💕`;
+            gameMessage.textContent = `Amazing! You collected ${score} hearts!\nOnly hit ${bombsHit} bombs!\n\nYou've completely won my heart! 💕`;
+            
+            // Show game over screen
             gameOverScreen.classList.add('active');
             
+            // Show confetti
             showConfetti();
+            
+            // Play win sound
             playWinSound();
             
+            // Clear all objects
+            clearAllObjects();
+            
+            // Show success message
             setTimeout(() => {
-                showMusicStatus("You won my heart! love you kaluu💖");
+                showMusicStatus("You won my heart! 💖");
             }, 1000);
         }
-       
-        // End game (time's up)
+        
+        // END GAME (LOSE) - SHOWS MESSAGE
         function endGame() {
             gameActive = false;
             clearInterval(gameTimer);
+            clearInterval(objectCreationInterval);
             
+            // Check if player won or lost
             if (score >= winThreshold) {
                 winGame();
-            } else {
-                gameResult.textContent = '⏰ TIME\'S UP!';
-                gameMessage.textContent = `You collected ${score} hearts (need ${winThreshold}).\n${bombsHit} bombs hit you.\n Haha feri try gara! 💘`;
-                gameOverScreen.classList.add('active');
+                return;
             }
+            
+            // Set lose message
+            gameOverIcon.textContent = '💔';
+            gameResult.textContent = '⏰ TIME\'S UP!';
+            gameMessage.textContent = `You collected ${score} hearts (need ${winThreshold}).\nHit ${bombsHit} bombs.\n\nDon't give up! Try again to win my heart! 💘`;
+            
+            // Show game over screen
+            gameOverScreen.classList.add('active');
+            
+            // Clear all objects
+            clearAllObjects();
+            
+            // Show encouragement message
+            setTimeout(() => {
+                showMusicStatus("Try again! You can do it! 💪");
+            }, 1000);
         }
         
-        // Restart game
+        // Clear all game objects
+        function clearAllObjects() {
+            // Remove all objects from screen
+            const objects = heartContainer.querySelectorAll('.game-heart, .game-bomb');
+            objects.forEach(obj => obj.remove());
+            
+            // Clear active objects array
+            activeObjects = [];
+        }
+        
+        // RESTART GAME - FIXED FUNCTION
         function restartGame() {
+            console.log("Restart game called");
+            
+            // Hide game over screen
             gameOverScreen.classList.remove('active');
+            
+            // Reset game started flag
             gameStarted = false;
+            
+            // Clear any existing intervals
+            if (gameTimer) clearInterval(gameTimer);
+            if (objectCreationInterval) clearInterval(objectCreationInterval);
+            
+            // Start fresh game
             startLoveGame();
         }
         
@@ -1314,7 +1456,6 @@
         
         // Create Bomb Explosion
         function createBombExplosion(position) {
-            // Create explosion effect
             for (let i = 0; i < 8; i++) {
                 const particle = document.createElement('div');
                 particle.innerHTML = '💥';
@@ -1328,11 +1469,8 @@
                 
                 document.body.appendChild(particle);
                 
-                // Animate in different directions
                 const angle = (Math.PI * 2 * i) / 8;
                 const distance = 50;
-                const targetX = position.x + Math.cos(angle) * distance;
-                const targetY = position.y + Math.sin(angle) * distance;
                 
                 particle.animate([
                     { transform: 'scale(1) rotate(0deg)', opacity: 1 },
@@ -1350,7 +1488,6 @@
         
         // Play win sound
         function playWinSound() {
-            // Create a victory sound using Web Audio API
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const oscillator = audioContext.createOscillator();
@@ -1359,10 +1496,9 @@
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
                 
-                // Play victory tune
-                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
-                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
+                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
                 
                 gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
@@ -1431,18 +1567,6 @@
             const colors = ['#ff4d6d', '#ff6b9d', '#ff8e53', '#ffb347', '#ff9999', '#ff6666', '#ff85a2', '#ff9770'];
             return colors[Math.floor(Math.random() * colors.length)];
         }
-        
-        // Start object movement animation
-        function startObjectMovement() {
-            updateMovingObjects();
-        }
-        
-        // Start movement when game starts
-        setTimeout(() => {
-            if (gameActive) {
-                startObjectMovement();
-            }
-        }, 100);
     </script>
 </body>
 </html>
