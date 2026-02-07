@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propose Day ❤️</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+}
+
+.card {
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 40px 30px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  animation: fadeIn 1.5s ease;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
+}
+
+button {
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#yesBtn {
+  background: white;
+  color: #ff4d6d;
+}
+
+#yesBtn:hover {
+  background: #ffe1e9;
+  transform: scale(1.08);
+}
+
+#noBtn {
+  background: #ff4d6d;
+  color: white;
+  position: relative;
+}
+
+.hidden {
+  display: none;
+}
+
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 5s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.6); opacity: 0; }
+}
+</style>
+</head>
+
+<body onclick="startMusic()">
+
+<audio id="bgMusic" loop>
+  <source src="love-song.mp3" type="audio/mpeg">
+  Your browser does not support audio.
+</audio>
+
+<div class="card">
+  <h1>Happy Propose Day 💖</h1>
+  <div class="name">Susma Karki (Ney naa) 🌸</div>
+
+  <p>
+    From the day you came into my life,<br>
+    my world started smiling more.
+  </p>
+
+  <p>
+    I don’t want perfect moments,<br>
+    I just want <strong>you</strong> in every moment.
+  </p>
+
+  <p><strong>Will you be mine forever? 💍</strong></p>
+
+  <div class="buttons">
+    <button id="yesBtn" onclick="sayYes()">YES ❤️</button>
+    <button id="noBtn" onmouseover="moveNo()">NO 🙈</button>
+  </div>
+
+  <div id="loveMessage" class="hidden">
+    <p style="margin-top:20px;">
+      Yayyy! 😭❤️<br><br>
+      You just made me the happiest person alive.<br>
+      I promise to love you endlessly.<br><br>
+      <strong>I love you, Susma. 💖</strong>
+    </p>
+  </div>
+</div>
+
+<script>
+let musicStarted = false;
+
+function startMusic() {
+  if (!musicStarted) {
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.6;
+    music.play();
+    musicStarted = true;
+  }
+}
+
+function sayYes() {
+  document.getElementById("loveMessage").classList.remove("hidden");
+  startMusic();
+  createHearts();
+}
+
+function moveNo() {
+  const noBtn = document.getElementById("noBtn");
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 100;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function createHearts() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 250);
+}
+</script>
+
+</body>
+</html>
