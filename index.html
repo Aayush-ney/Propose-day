@@ -7,110 +7,86 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI",sans-serif; }
 body { height:100vh; background: linear-gradient(135deg, #ff5f6d, #ffc371); display:flex; justify-content:center; align-items:center; overflow:hidden; color:white; position:relative; font-size:16px;}
-.card { background: rgba(255,255,255,0.18); backdrop-filter: blur(12px); border-radius:25px; padding:30px 20px; width:90%; max-width:400px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.25); animation:fadeIn 1.5s ease;}
+.card { background: rgba(255,255,255,0.18); backdrop-filter: blur(12px); border-radius:25px; padding:30px 20px; width:90%; max-width:400px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.25);}
 h1 { font-size:2rem; margin-bottom:10px; }
 .name { font-size:1.2rem; font-weight:bold; margin-bottom:15px; color:#fff; text-shadow:0 0 8px #fff,0 0 20px #ff4d6d; animation: glow 2s ease-in-out infinite alternate;}
 @keyframes glow {0% {text-shadow:0 0 8px #fff,0 0 20px #ff4d6d;} 100% {text-shadow:0 0 20px #fff,0 0 30px #ff4d6d;}}
-p { font-size:1rem; line-height:1.6; margin-bottom:15px; opacity:0;}
-.buttons { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:10px; }
+p { font-size:1rem; line-height:1.6; margin-bottom:15px;}
 button { border:none; padding:10px 20px; border-radius:30px; font-size:1rem; cursor:pointer; transition:0.3s ease;}
-#yesBtn { background:white; color:#ff4d6d; }
-#yesBtn:hover { transform:scale(1.08); background:#ffe1e9; }
+#yesBtn { background:white; color:#ff4d6d; } #yesBtn:hover { transform:scale(1.08); background:#ffe1e9; }
 #noBtn { background:#ff4d6d; color:white; }
 .hidden { display:none; }
 .heart { position:fixed; bottom:-20px; font-size:20px; animation:floatUp 5s linear forwards; opacity:0.9; }
-.signature { margin-top:15px; font-size:0.9rem; font-weight:bold; opacity:0.8; }
 #loveMeterContainer { width:80%; max-width:300px; height:18px; background:rgba(255,255,255,0.3); border-radius:10px; margin:10px auto; overflow:hidden; }
 #loveMeter { height:100%; width:0%; background:#ff4d6d; border-radius:10px; transition:width 0.3s ease; }
-@keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+.signature { margin-top:15px; font-size:0.9rem; font-weight:bold; opacity:0.8; }
 @keyframes floatUp { 0%{transform:translateY(0) scale(1) rotate(0deg); opacity:1;} 100%{transform:translateY(-100vh) scale(1.6) rotate(360deg); opacity:0;} }
-@media(max-width:400px){
-  .card{padding:20px 15px;}
-  h1{font-size:1.8rem;}
-  .name{font-size:1.1rem;}
-  button{padding:8px 15px; font-size:0.9rem;}
-  #loveMeterContainer{height:16px;}
-}
+@media(max-width:400px){ .card{padding:20px 15px;} h1{font-size:1.8rem;} .name{font-size:1.1rem;} button{padding:8px 15px; font-size:0.9rem;} #loveMeterContainer{height:16px;} }
 </style>
 </head>
 <body>
 
+<!-- Audio -->
 <audio id="bgMusic" loop>
   <source src="Ji Chanta Matina.m4a" type="audio/mp4">
-  Your browser does not support audio.
 </audio>
 
-<div id="loveMeterContainer">
-  <div id="loveMeter"></div>
-</div>
-
-<div class="card">
+<!-- Page 1: Proposal -->
+<div id="page1" class="card">
   <h1>Happy Propose Day 💖</h1>
   <div class="name">Susma Karki (Ney naa) 🌸</div>
-
-  <p id="line1">From the moment you entered my life, my world became warmer and brighter.</p>
-  <p id="line2">I don’t want perfect days, I just want <strong>you</strong> in every day.</p>
-  <p id="line3"><strong>Will you be mine forever? 💍</strong></p>
-
+  <p>From the moment you entered my life, my world became warmer and brighter.</p>
+  <p>I don’t want perfect days, I just want <strong>you</strong> in every day.</p>
+  <p><strong>Will you be mine forever? 💍</strong></p>
   <div class="buttons">
     <button id="yesBtn">YES ❤️</button>
     <button id="noBtn">NO 🙈</button>
   </div>
+</div>
 
-  <div id="loveMessage" class="hidden">
+<!-- Page 2: Love Messages -->
+<div id="page2" class="card hidden">
+  <h1>My Love for You 💖</h1>
+  <div id="loveMessage">
     <p id="msg1" class="hidden">Yayyy! 😭❤️ You just made my heart the happiest place on earth.</p>
     <p id="msg2" class="hidden">I promise to choose you, love you, and stand by you always.</p>
     <p id="msg3" class="hidden"><strong>I love you, Susma 💖</strong></p>
-    <div class="signature">— Aayush Maka</div>
+  </div>
+  <div class="buttons" style="margin-top:20px;">
+    <button id="goGameBtn">Play Love Mini-Game 💖</button>
+  </div>
+</div>
+
+<!-- Page 3: Mini-game -->
+<div id="page3" class="card hidden">
+  <h1>Catch the Hearts 💖</h1>
+  <p>Click the hearts to fill your love meter!</p>
+  <div id="loveMeterContainer">
+    <div id="loveMeter"></div>
   </div>
 </div>
 
 <script>
-let love = 0;
-
+let yesClicked = false;
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
+const goGameBtn = document.getElementById("goGameBtn");
+const music = document.getElementById("bgMusic");
+let love = 0;
 
-// YES button click
-yesBtn.addEventListener("click",()=>{
-  document.getElementById("loveMessage").classList.remove("hidden");
-  startMusic();
-  typeText();
-  createHearts();
-  startLoveGame();
+// YES button → Page 2
+yesBtn.addEventListener("click", ()=>{
+  if(yesClicked) return;
+  yesClicked = true;
+  music.volume=0.6;
+  music.play().catch(()=>console.log("Click YES to play music"));
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("page2").classList.remove("hidden");
   showMessagesSequential();
 });
 
-// NO button dodge forever
-noBtn.addEventListener("mouseover", escapeNo);
-
-function startMusic(){
-  const music = document.getElementById("bgMusic");
-  music.volume=0.6;
-  music.play().catch(()=>console.log("Click YES to play music"));
-}
-
-// Typing effect
-function typeText(){
-  const lines=["line1","line2","line3"];
-  const text=[
-    "From the moment you entered my life, my world became warmer and brighter.",
-    "I don’t want perfect days, I just want you in every day.",
-    "Will you be mine forever? 💍"
-  ];
-  let i=0,j=0;
-  function type(){
-    if(j<text[i].length){
-      document.getElementById(lines[i]).innerHTML+=text[i][j];
-      j++; setTimeout(type,40);
-    }else{i++; j=0; if(i<lines.length){document.getElementById(lines[i]).style.opacity=1; type();}}
-  }
-  document.getElementById(lines[0]).style.opacity=1;
-  type();
-}
-
-// NO button logic
-function escapeNo(){
+// NO button dodges forever
+noBtn.addEventListener("mouseover", ()=>{
   const rect=noBtn.getBoundingClientRect();
   const maxX=window.innerWidth - rect.width -10;
   const maxY=window.innerHeight - rect.height -10;
@@ -119,19 +95,7 @@ function escapeNo(){
   noBtn.style.top=Math.random()*maxY+"px";
   noBtn.style.transition="0.3s ease";
   noBtn.style.transform=`rotate(${Math.random()*30-15}deg)`;
-}
-
-// Floating hearts
-function createHearts(){
-  setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤️";
-    heart.style.left=Math.random()*100+"vw";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
-  },250);
-}
+});
 
 // Sequential messages
 function showMessagesSequential(){
@@ -155,6 +119,13 @@ function showMessagesSequential(){
   showNext();
 }
 
+// Go to mini-game → Page 3
+goGameBtn.addEventListener("click", ()=>{
+  document.getElementById("page2").classList.add("hidden");
+  document.getElementById("page3").classList.remove("hidden");
+  startLoveGame();
+});
+
 // Mini-game: catch hearts
 function startLoveGame(){
   setInterval(()=>{
@@ -175,6 +146,17 @@ function startLoveGame(){
     setTimeout(()=>heart.remove(),4000);
   },1500);
 }
+
+// Floating hearts in background (optional)
+setInterval(()=>{
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+},250);
 </script>
+
 </body>
 </html>
