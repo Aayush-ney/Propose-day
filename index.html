@@ -274,36 +274,36 @@
         /* Heart Styling */
         .game-heart {
             position: absolute;
-            font-size: 30px;
+            font-size: 28px;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 10;
             user-select: none;
             -webkit-user-select: none;
-            animation: pulse 1.5s infinite alternate;
+            animation: pulse 1.2s infinite alternate;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         
         @keyframes pulse {
             0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
+            100% { transform: scale(1.15); }
         }
         
         /* Bomb Styling */
         .game-bomb {
             position: absolute;
-            font-size: 32px;
+            font-size: 30px;
             cursor: pointer;
             z-index: 10;
             user-select: none;
             -webkit-user-select: none;
-            animation: shake 0.5s infinite alternate, rotateBomb 3s linear infinite;
+            animation: shake 0.4s infinite alternate, rotateBomb 2.5s linear infinite;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         
         @keyframes shake {
-            0% { transform: translateX(-2px); }
-            100% { transform: translateX(2px); }
+            0% { transform: translateX(-3px) rotate(-5deg); }
+            100% { transform: translateX(3px) rotate(5deg); }
         }
         
         @keyframes rotateBomb {
@@ -312,7 +312,7 @@
         }
         
         .bomb-warning {
-            background: rgba(255, 50, 50, 0.9);
+            background: linear-gradient(45deg, #ff3333, #ff6666);
             color: white;
             padding: 8px 15px;
             border-radius: 10px;
@@ -320,13 +320,14 @@
             font-weight: bold;
             margin: 10px auto;
             display: inline-block;
-            animation: warningPulse 1s infinite;
+            animation: warningPulse 0.8s infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
         @keyframes warningPulse {
-            0% { opacity: 0.7; transform: scale(1); }
+            0% { opacity: 0.8; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
-            100% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1); }
         }
         
         /* Timer */
@@ -344,7 +345,7 @@
         }
         
         .timer.warning {
-            background: rgba(255, 100, 50, 0.9);
+            background: rgba(255, 150, 50, 0.9);
             animation: timerWarning 1s infinite;
         }
         
@@ -373,6 +374,15 @@
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 10px;
+        }
+        
+        /* Game Info */
+        .game-info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 15px;
+            margin: 10px 0;
+            font-size: 0.9rem;
         }
         
         /* Floating Hearts Background */
@@ -507,14 +517,14 @@
             border-radius: 50%;
         }
         
-        /* GAME OVER SCREEN - FIXED */
+        /* GAME OVER SCREEN */
         .game-over {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.92);
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -532,20 +542,21 @@
         }
         
         .game-over-icon {
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin-bottom: 20px;
             animation: bounce 1s infinite alternate;
         }
         
         @keyframes bounce {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-15px); }
+            100% { transform: translateY(-20px); }
         }
         
         .game-over h2 {
             font-size: 2.2rem;
             margin-bottom: 15px;
             color: #ff4d6d;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
         
         .game-over p {
@@ -554,6 +565,10 @@
             margin-bottom: 25px;
             line-height: 1.6;
             max-width: 90%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            border-left: 4px solid #ff4d6d;
         }
         
         .game-over-buttons {
@@ -565,7 +580,7 @@
         }
         
         .retry-btn {
-            background: #ff4d6d;
+            background: linear-gradient(145deg, #ff4d6d, #ff6b9d);
             color: white;
             border: none;
             padding: 14px 28px;
@@ -577,15 +592,16 @@
             align-items: center;
             gap: 10px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
         }
         
-        .retry-btn:hover {
-            background: #ff3355;
-            transform: translateY(-2px);
+        .retry-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(255, 77, 109, 0.3);
         }
         
         .back-btn {
-            background: #36d1dc;
+            background: linear-gradient(145deg, #36d1dc, #5b86e5);
             color: white;
             border: none;
             padding: 14px 28px;
@@ -597,11 +613,12 @@
             align-items: center;
             gap: 10px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(54, 209, 220, 0.3);
         }
         
-        .back-btn:hover {
-            background: #25c0cc;
-            transform: translateY(-2px);
+        .back-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(54, 209, 220, 0.3);
         }
         
         /* Portrait/Landscape adjustments */
@@ -620,7 +637,7 @@
             }
             
             .game-heart, .game-bomb {
-                font-size: 26px;
+                font-size: 24px;
             }
             
             .stat-box {
@@ -645,6 +662,7 @@
             
             .game-over p {
                 font-size: 1rem;
+                padding: 12px;
             }
             
             .retry-btn, .back-btn {
@@ -744,7 +762,7 @@
             </div>
             <div class="buttons">
                 <button id="goGameBtn">
-                    <i class="fas fa-gamepad"></i> LOVE CHALLENGE 💖
+                    <i class="fas fa-gamepad"></i> ULTIMATE LOVE CHALLENGE 💖
                 </button>
             </div>
         </div>
@@ -752,10 +770,15 @@
         <!-- Page 3: Mini-game -->
         <div id="page3" class="card">
             <h1>Prove Your Love 💕</h1>
-            <p class="difficulty">Try gara😊😁⚡</p>
+            <p class="difficulty">IMPOSSIBLE MODE ⚡💣</p>
             <p>Catch hearts 💖 but avoid bombs 💣!</p>
-            <div class="bomb-warning">WARNING: Bombs decrease score by 3!</div>
-            <p>Collect 35 hearts in <strong>40 seconds</strong> to win! ⏰</p>
+            <div class="bomb-warning">⚠️ 30% BOMB SPAWN RATE! -3 POINTS EACH!</div>
+            
+            <div class="game-info">
+                <p><strong>🎯 Goal:</strong> Collect <span style="color:#ff4d6d; font-weight:bold">45 hearts</span> in <span style="color:#ff4d6d; font-weight:bold">40 seconds</span></p>
+                <p><strong>💖 Hearts:</strong> +1 point each</p>
+                <p><strong>💣 Bombs:</strong> -3 points each</p>
+            </div>
             
             <div class="game-stats">
                 <div class="stat-box">
@@ -777,18 +800,18 @@
                     <div id="loveMeter"></div>
                 </div>
                 <div class="meter-text">
-                    <span>0%</span>
-                    <span>100%</span>
+                    <span>My Heart</span>
+                    <span>45 Hearts Goal</span>
                 </div>
             </div>
             
             <div id="heartContainer">
                 <div class="timer" id="timer">40s</div>
-                <!-- GAME OVER SCREEN - FIXED POSITION -->
+                <!-- GAME OVER SCREEN -->
                 <div class="game-over" id="gameOverScreen">
                     <div class="game-over-icon" id="gameOverIcon">🎉</div>
-                    <h2 id="gameResult">🎉 YOU WIN! 💖</h2>
-                    <p id="gameMessage">Thank you bebu malai maya garna ko lagi</p>
+                    <h2 id="gameResult">YOU WIN! 💖</h2>
+                    <p id="gameMessage">Loading results...</p>
                     <div class="game-over-buttons">
                         <button class="retry-btn" id="retryBtn">
                             <i class="fas fa-redo"></i> Play Again
@@ -799,7 +822,7 @@
                     </div>
                 </div>
             </div>
-            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Tap hearts 💖 (+1) | Avoid bombs 💣 (-3)</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Be fast! Bombs appear 30% of the time! ⚡</p>
         </div>
     </div>
 
@@ -836,7 +859,7 @@
         const bombsDisplay = document.getElementById('bombs');
         const timerDisplay = document.getElementById('timer');
         
-        // GAME OVER ELEMENTS - FIXED SELECTORS
+        // Game Over Elements
         const gameOverScreen = document.getElementById('gameOverScreen');
         const gameOverIcon = document.getElementById('gameOverIcon');
         const gameResult = document.getElementById('gameResult');
@@ -844,22 +867,22 @@
         const retryBtn = document.getElementById('retryBtn');
         const backBtn = document.getElementById('backBtn');
         
-        // Game Variables
+        // Game Variables - UPDATED SETTINGS
         let yesClicked = false;
         let gameStarted = false;
         let musicPlaying = false;
         let gameActive = false;
         
-        // Game Stats
+        // Game Stats - NEW SETTINGS
         let score = 0;
-        let timeLeft = 40;
+        let timeLeft = 40; // 40 SECOND TIMER
         let bombsHit = 0;
         let gameTimer = null;
         let objectCreationInterval = null;
         let activeObjects = [];
-        let bombChance = 0.2;
+        let bombChance = 0.3; // 30% BOMB SPAWN RATE
         let bombPenalty = 3;
-        let winThreshold = 35;
+        let winThreshold = 45; // NEED 45 HEARTS TO WIN
         
         // Love messages
         const messages = [
@@ -881,15 +904,12 @@
         });
         
         function init() {
-            // Hide loading screen and show page immediately
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
                 page1.classList.add('active');
             }, 800);
             
-            // Start music immediately
             startMusicImmediately();
-            
             setupEventListeners();
             setupTouchSupport();
             createFloatingHearts();
@@ -929,11 +949,6 @@
             music.addEventListener('pause', function() {
                 musicPlaying = false;
                 musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            });
-            
-            music.addEventListener('error', function(e) {
-                console.error("Audio error:", music.error);
-                showMusicStatus("Using romantic music 🎵");
             });
             
             const enableAudio = () => {
@@ -976,10 +991,8 @@
             musicToggle.addEventListener('click', toggleMusic);
             musicToggle.addEventListener('touchend', toggleMusic);
             
-            // RETRY BUTTON - FIXED EVENT LISTENER
+            // Game Buttons
             retryBtn.addEventListener('click', restartGame);
-            
-            // BACK BUTTON - FIXED EVENT LISTENER
             backBtn.addEventListener('click', goBackToLove);
         }
         
@@ -1054,8 +1067,6 @@
                 music.play().then(() => {
                     musicPlaying = true;
                     showMusicStatus("Music playing");
-                }).catch(error => {
-                    showMusicStatus("Tap page to enable audio");
                 });
             }
         }
@@ -1099,7 +1110,7 @@
             typeChar();
         }
         
-        // Start Love Game
+        // Start Love Game - WITH NEW SETTINGS
         function startLoveGame() {
             if (gameStarted) return;
             
@@ -1107,9 +1118,10 @@
             gameStarted = true;
             gameActive = true;
             score = 0;
-            timeLeft = 40;
+            timeLeft = 40; // 40 SECONDS
             bombsHit = 0;
             activeObjects = [];
+            bombChance = 0.3; // 30% BOMB SPAWN
             
             // Clear game over screen
             gameOverScreen.classList.remove('active');
@@ -1128,7 +1140,7 @@
             
             // Reset love meter
             loveMeter.style.width = '0%';
-            loveMeter.textContent = '';
+            loveMeter.textContent = '0%';
             
             // Clear any existing intervals
             if (gameTimer) clearInterval(gameTimer);
@@ -1151,22 +1163,22 @@
             // Clear any existing interval
             if (objectCreationInterval) clearInterval(objectCreationInterval);
             
-            // Create objects at regular intervals
+            // Create objects at regular intervals - FASTER SPAWN FOR CHALLENGE
             objectCreationInterval = setInterval(() => {
                 if (!gameActive) return;
                 
-                // Create 1-3 objects at once
-                const objectCount = Math.floor(Math.random() * 2) + 1;
+                // Create 2-4 objects at once (more for challenge)
+                const objectCount = Math.floor(Math.random() * 3) + 2;
                 
                 for (let i = 0; i < objectCount; i++) {
                     setTimeout(() => {
                         if (gameActive) {
-                            const isBomb = Math.random() < bombChance;
+                            const isBomb = Math.random() < bombChance; // 30% chance
                             createGameObject(isBomb);
                         }
-                    }, i * 200);
+                    }, i * 150);
                 }
-            }, 800); // Create objects every 800ms
+            }, 600); // Create objects every 600ms (faster)
         }
         
         // Create a single game object
@@ -1179,11 +1191,11 @@
             if (isBomb) {
                 object.innerHTML = '💣';
                 object.className = 'game-bomb';
-                object.title = 'Avoid! -3 points';
+                object.title = 'BOMB! -3 points';
             } else {
                 object.innerHTML = '💖';
                 object.className = 'game-heart';
-                object.title = 'Collect! +1 point';
+                object.title = 'HEART! +1 point';
             }
             
             // Random starting position
@@ -1192,8 +1204,8 @@
             object.style.left = startX + '%';
             object.style.top = startY + '%';
             
-            // Random movement
-            const speed = 0.5 + Math.random() * 1.5;
+            // Faster movement for challenge
+            const speed = 0.8 + Math.random() * 1.5;
             const angle = Math.random() * Math.PI * 2;
             const moveX = Math.cos(angle) * speed;
             const moveY = Math.sin(angle) * speed;
@@ -1206,7 +1218,7 @@
                 y: startY,
                 moveX: moveX,
                 moveY: moveY,
-                life: 4000,
+                life: 3500, // Shorter life (3.5 seconds)
                 collected: false
             };
             
@@ -1261,7 +1273,7 @@
             // Update game state
             updateStats();
             
-            // Update love meter
+            // Update love meter (need 45 hearts for 100%)
             const progress = Math.min((score / winThreshold) * 100, 100);
             loveMeter.style.width = progress + '%';
             loveMeter.textContent = Math.round(progress) + '%';
@@ -1285,17 +1297,25 @@
                 
                 // Bounce off walls
                 if (obj.x < 5 || obj.x > 90) {
-                    obj.moveX *= -1;
+                    obj.moveX *= -1.1; // Bounce with more force
                     obj.x = Math.max(5, Math.min(90, obj.x));
                 }
                 if (obj.y < 5 || obj.y > 85) {
-                    obj.moveY *= -1;
+                    obj.moveY *= -1.1; // Bounce with more force
                     obj.y = Math.max(5, Math.min(85, obj.y));
                 }
                 
                 // Update position
                 obj.element.style.left = obj.x + '%';
                 obj.element.style.top = obj.y + '%';
+                
+                // Random direction change occasionally (more often for challenge)
+                if (Math.random() < 0.03) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.sqrt(obj.moveX * obj.moveX + obj.moveY * obj.moveY);
+                    obj.moveX = Math.cos(angle) * speed;
+                    obj.moveY = Math.sin(angle) * speed;
+                }
             });
             
             // Continue animation
@@ -1330,12 +1350,15 @@
                 timerDisplay.className = 'timer warning';
             }
             
-            // Increase bomb chance as time runs out
+            // Increase bomb chance as time runs out for extra challenge
             if (timeLeft <= 20) {
-                bombChance = 0.3;
+                bombChance = 0.35; // 35% chance
             }
             if (timeLeft <= 10) {
-                bombChance = 0.4;
+                bombChance = 0.4; // 40% chance
+            }
+            if (timeLeft <= 5) {
+                bombChance = 0.45; // 45% chance - VERY HARD!
             }
             
             if (timeLeft <= 0) {
@@ -1343,7 +1366,7 @@
             }
         }
         
-        // WIN THE GAME - SHOWS MESSAGE
+        // WIN THE GAME
         function winGame() {
             gameActive = false;
             clearInterval(gameTimer);
@@ -1351,8 +1374,15 @@
             
             // Set win message
             gameOverIcon.textContent = '🎉';
-            gameResult.textContent = '🎉 YOU WIN! 💖';
-            gameMessage.textContent = `Amazing! You collected ${score} hearts!\nOnly hit ${bombsHit} bombs!\n\n thank you bebu malai maya garna ko lagi💕`;
+            gameResult.textContent = '🎉 MISSION ACCOMPLISHED! 💖';
+            gameMessage.innerHTML = ` 
+                <strong>🎯 GOAL ACHIEVED!</strong><br>
+                You collected <span style="color:#ff4d6d">${score} hearts</span>!<br>
+                Only hit <span style="color:#ff4d6d">${bombsHit} bombs</span>!<br><br>
+                ⏱️ Time remaining: <span style="color:#4CAF50">${timeLeft} seconds</span><br><br>
+               love you Susma!<br>
+                Thank you bebu malai maya garna ko lagii💕
+            `;
             
             // Show game over screen
             gameOverScreen.classList.add('active');
@@ -1368,11 +1398,11 @@
             
             // Show success message
             setTimeout(() => {
-                showMusicStatus("You won my heart! 💖");
+                showMusicStatus("You're amazing! 💖");
             }, 1000);
         }
         
-        // END GAME (LOSE) - SHOWS MESSAGE
+        // END GAME (LOSE)
         function endGame() {
             gameActive = false;
             clearInterval(gameTimer);
@@ -1387,7 +1417,17 @@
             // Set lose message
             gameOverIcon.textContent = '💔';
             gameResult.textContent = '⏰ TIME\'S UP!';
-            gameMessage.textContent = `You collected ${score} hearts (need ${winThreshold}).\nHit ${bombsHit} bombs.\n\nDon't give up! Try again to win my heart! 💘`;
+            
+            const heartsNeeded = winThreshold - score;
+            gameMessage.innerHTML = `
+                <strong>Challenge Failed!</strong><br>
+                You collected <span style="color:#ff4d6d">${score} hearts</span><br>
+                Needed <span style="color:#ff4d6d">${winThreshold}</span> to win.<br>
+                Hit <span style="color:#ff4d6d">${bombsHit} bombs</span>.<br><br>
+                You were <span style="color:#ff4d6d">${heartsNeeded} hearts</span> short!<br><br>
+                Don't give up! Try again!<br>
+                I believe in you! 💘
+            `;
             
             // Show game over screen
             gameOverScreen.classList.add('active');
@@ -1403,17 +1443,14 @@
         
         // Clear all game objects
         function clearAllObjects() {
-            // Remove all objects from screen
             const objects = heartContainer.querySelectorAll('.game-heart, .game-bomb');
             objects.forEach(obj => obj.remove());
-            
-            // Clear active objects array
             activeObjects = [];
         }
         
-        // RESTART GAME - FIXED FUNCTION
+        // RESTART GAME
         function restartGame() {
-            console.log("Restart game called");
+            console.log("Restarting game with new settings...");
             
             // Hide game over screen
             gameOverScreen.classList.remove('active');
@@ -1436,53 +1473,53 @@
             heart.style.position = 'fixed';
             heart.style.left = position.x + 'px';
             heart.style.top = position.y + 'px';
-            heart.style.fontSize = '35px';
+            heart.style.fontSize = '32px';
             heart.style.opacity = '1';
-            heart.style.transition = 'all 0.6s ease-out';
+            heart.style.transition = 'all 0.5s ease-out';
             heart.style.zIndex = '1000';
             heart.style.pointerEvents = 'none';
             
             document.body.appendChild(heart);
             
             setTimeout(() => {
-                heart.style.transform = 'translateY(-70px) scale(1.8)';
+                heart.style.transform = 'translateY(-60px) scale(1.6)';
                 heart.style.opacity = '0';
             }, 10);
             
             setTimeout(() => {
                 heart.remove();
-            }, 700);
+            }, 600);
         }
         
         // Create Bomb Explosion
         function createBombExplosion(position) {
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 10; i++) {
                 const particle = document.createElement('div');
                 particle.innerHTML = '💥';
                 particle.style.position = 'fixed';
                 particle.style.left = position.x + 'px';
                 particle.style.top = position.y + 'px';
-                particle.style.fontSize = '20px';
+                particle.style.fontSize = '22px';
                 particle.style.opacity = '1';
                 particle.style.zIndex = '1000';
                 particle.style.pointerEvents = 'none';
                 
                 document.body.appendChild(particle);
                 
-                const angle = (Math.PI * 2 * i) / 8;
-                const distance = 50;
+                const angle = (Math.PI * 2 * i) / 10;
+                const distance = 60;
                 
                 particle.animate([
                     { transform: 'scale(1) rotate(0deg)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1.5) rotate(180deg)`, opacity: 0 }
+                    { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1.6) rotate(180deg)`, opacity: 0 }
                 ], {
-                    duration: 800,
+                    duration: 700,
                     easing: 'ease-out'
                 });
                 
                 setTimeout(() => {
                     particle.remove();
-                }, 800);
+                }, 700);
             }
         }
         
@@ -1496,15 +1533,17 @@
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
                 
+                // Victory tune
                 oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
                 oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
                 oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
+                oscillator.frequency.setValueAtTime(1046.50, audioContext.currentTime + 0.3);
                 
                 gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
                 
                 oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.5);
+                oscillator.stop(audioContext.currentTime + 0.6);
             } catch (e) {
                 console.log("Web Audio not supported");
             }
@@ -1533,7 +1572,7 @@
         
         // Show Confetti
         function showConfetti() {
-            for (let i = 0; i < 120; i++) {
+            for (let i = 0; i < 150; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
@@ -1558,7 +1597,7 @@
                             confetti.remove();
                         }
                     };
-                }, i * 20);
+                }, i * 15);
             }
         }
         
