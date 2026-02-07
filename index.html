@@ -6,144 +6,41 @@
 <title>Happy Propose Day ❤️</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
-}
+* { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI",sans-serif; }
+body { height:100vh; background: linear-gradient(135deg, #ff5f6d, #ffc371); display:flex; justify-content:center; align-items:center; overflow:hidden; color:white; position:relative;}
+.card { background: rgba(255,255,255,0.18); backdrop-filter: blur(12px); border-radius:25px; padding:40px 30px; width:90%; max-width:420px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.25); animation:fadeIn 1.5s ease;}
+h1 { font-size:2.2rem; margin-bottom:10px; }
+.name { font-size:1.3rem; font-weight:bold; margin-bottom:15px; color:#fff; text-shadow:0 0 8px #fff,0 0 20px #ff4d6d; animation: glow 2s ease-in-out infinite alternate;}
+@keyframes glow {0% {text-shadow:0 0 8px #fff,0 0 20px #ff4d6d;} 100% {text-shadow:0 0 20px #fff,0 0 30px #ff4d6d;}}
+p { font-size:1.05rem; line-height:1.7; margin-bottom:18px; opacity:0;}
+.buttons { display:flex; justify-content:center; gap:15px; position:relative;}
+button { border:none; padding:12px 26px; border-radius:30px; font-size:1rem; cursor:pointer; transition:0.3s ease;}
+#yesBtn { background:white; color:#ff4d6d;}
+#yesBtn:hover { transform:scale(1.08); background:#ffe1e9;}
+#noBtn { background:#ff4d6d; color:white;}
+.hidden { display:none; }
+.heart { position:fixed; bottom:-20px; font-size:20px; animation:floatUp 5s linear forwards; opacity:0.9;}
+.signature { margin-top:20px; font-size:1rem; font-weight:bold; opacity:0.8;}
+#loveMeterContainer { width:80%; max-width:300px; height:20px; background:rgba(255,255,255,0.3); border-radius:10px; margin:15px auto; overflow:hidden;}
+#loveMeter { height:100%; width:0%; background:#ff4d6d; border-radius:10px; transition:width 0.3s ease;}
 
-body {
-  height: 100vh;
-  background: linear-gradient(135deg, #ff5f6d, #ffc371);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  color: white;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-  border-radius: 25px;
-  padding: 40px 30px;
-  width: 90%;
-  max-width: 420px;
-  text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-  animation: fadeIn 1.5s ease;
-}
-
-h1 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-}
-
-.name {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #fff;
-  text-shadow: 0 0 8px #fff, 0 0 20px #ff4d6d;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  0% { text-shadow: 0 0 8px #fff, 0 0 20px #ff4d6d; }
-  100% { text-shadow: 0 0 20px #fff, 0 0 30px #ff4d6d; }
-}
-
-p {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  margin-bottom: 18px;
-  opacity: 0;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  position: relative;
-}
-
-button {
-  border: none;
-  padding: 12px 26px;
-  border-radius: 30px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-#yesBtn {
-  background: white;
-  color: #ff4d6d;
-}
-
-#yesBtn:hover {
-  transform: scale(1.08);
-  background: #ffe1e9;
-}
-
-#noBtn {
-  background: #ff4d6d;
-  color: white;
-}
-
-.hidden {
-  display: none;
-}
-
-.heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 20px;
-  animation: floatUp 5s linear forwards;
-  opacity: 0.9;
-}
-
-.signature {
-  margin-top: 20px;
-  font-size: 1rem;
-  font-weight: bold;
-  opacity: 0.8;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes floatUp {
-  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(-100vh) scale(1.6) rotate(360deg); opacity: 0; }
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px) rotate(-5deg); }
-  50% { transform: translateX(6px) rotate(5deg); }
-  75% { transform: translateX(-6px) rotate(-5deg); }
-  100% { transform: translateX(0); }
-}
-
-@keyframes typewriter {
-  from { width: 0; opacity: 1; }
-  to { width: 100%; opacity: 1; }
-}
+@keyframes fadeIn { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+@keyframes floatUp { 0%{transform:translateY(0) scale(1) rotate(0deg); opacity:1;} 100%{transform:translateY(-100vh) scale(1.6) rotate(360deg); opacity:0;} }
 </style>
 </head>
 
-<body onclick="startMusic()">
+<body>
 
 <!-- 🎵 Background Music -->
 <audio id="bgMusic" loop>
   <source src="https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/laakhau-hajara.m4a" type="audio/mp4">
-  Your browser does not support audio.
+
 </audio>
+
+<!-- Love Meter -->
+<div id="loveMeterContainer">
+  <div id="loveMeter"></div>
+</div>
 
 <div class="card">
   <h1>Happy Propose Day 💖</h1>
@@ -159,95 +56,116 @@ button {
   </div>
 
   <div id="loveMessage" class="hidden">
-    <p style="margin-top:22px;">
-      Yayyy! 😭❤️<br><br>
-      You just made my heart the happiest place on earth.<br>
-      I promise to choose you, love you,<br>
-      and stand by you always.<br><br>
-      <strong>I love you, Susma 💖</strong>
-    </p>
+    <p id="msg1" class="hidden">Yayyy! 😭❤️ You just made my heart the happiest place on earth.</p>
+    <p id="msg2" class="hidden">I promise to choose you, love you, and stand by you always.</p>
+    <p id="msg3" class="hidden"><strong>I love you, Susma 💖</strong></p>
     <div class="signature">— Aayush Maka</div>
   </div>
 </div>
 
 <script>
-let musicStarted = false;
+let love = 0;
 
 function startMusic() {
-  if (!musicStarted) {
-    const music = document.getElementById("bgMusic");
-    music.volume = 0.6;
-    music.play();
-    musicStarted = true;
-    typeText(); // Start typing messages
-  }
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.6;
+  music.play().catch(()=>console.log("Click YES to play music")); // browser gesture required
 }
 
-// Typing animation for messages
+// Only runs when YES is clicked
 function typeText() {
   const lines = ["line1","line2","line3"];
-  let i = 0;
-  let j = 0;
-  let currentLine = document.getElementById(lines[i]);
-  currentLine.style.opacity = 1;
-  currentLine.innerHTML = "";
-
-  function type() {
-    if(j < text[i].length) {
-      currentLine.innerHTML += text[i][j];
-      j++;
-      setTimeout(type, 40);
-    } else {
-      i++;
-      j=0;
-      if(i < lines.length) {
-        currentLine = document.getElementById(lines[i]);
-        currentLine.style.opacity = 1;
-        currentLine.innerHTML = "";
-        type();
-      }
-    }
-  }
-
   const text = [
     "From the moment you entered my life, my world became warmer and brighter.",
     "I don’t want perfect days, I just want you in every day.",
     "Will you be mine forever? 💍"
   ];
-
+  let i=0,j=0;
+  function type() {
+    if(j<text[i].length){
+      document.getElementById(lines[i]).innerHTML += text[i][j];
+      j++; setTimeout(type,40);
+    }else{i++; j=0; if(i<lines.length){document.getElementById(lines[i]).style.opacity=1; type();}}
+  }
+  document.getElementById(lines[0]).style.opacity=1;
   type();
 }
 
-function sayYes() {
+function sayYes(){
   document.getElementById("loveMessage").classList.remove("hidden");
   startMusic();
+  typeText();
   createHearts();
+  startLoveGame();
+  showMessagesSequential();
 }
 
-function escapeNo() {
+function escapeNo(){
   const noBtn = document.getElementById("noBtn");
   const rect = noBtn.getBoundingClientRect();
   const maxX = window.innerWidth - rect.width - 10;
   const maxY = window.innerHeight - rect.height - 10;
-
-  noBtn.style.position = "fixed";
-  noBtn.style.left = Math.random() * maxX + "px";
-  noBtn.style.top = Math.random() * maxY + "px";
-  noBtn.style.transition = "0.3s ease";
-  noBtn.style.transform = `rotate(${Math.random()*30-15}deg)`; // rotate slightly
+  noBtn.style.position="fixed";
+  noBtn.style.left=Math.random()*maxX+"px";
+  noBtn.style.top=Math.random()*maxY+"px";
+  noBtn.style.transition="0.3s ease";
+  noBtn.style.transform=`rotate(${Math.random()*30-15}deg)`;
 }
 
-function createHearts() {
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
+// Floating hearts
+function createHearts(){
+  setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
-  }, 250);
+    setTimeout(()=>heart.remove(),6000);
+  },250);
+}
+
+// Sequential love messages
+function showMessagesSequential(){
+  const msgs=["msg1","msg2","msg3"];
+  let i=0;
+  function showNext(){
+    if(i<msgs.length){
+      const el=document.getElementById(msgs[i]);
+      el.classList.remove("hidden");
+      el.style.opacity=0;
+      let opacity=0;
+      let interval=setInterval(()=>{
+        opacity+=0.05;
+        el.style.opacity=opacity;
+        if(opacity>=1) clearInterval(interval);
+      },50);
+      i++;
+      setTimeout(showNext,2000);
+    }
+  }
+  showNext();
+}
+
+// Mini-game: catch hearts
+function startLoveGame(){
+  setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*(window.innerWidth-30)+"px";
+    heart.style.top=Math.random()*(window.innerHeight-30)+"px";
+    heart.style.fontSize="25px";
+    heart.style.cursor="pointer";
+    document.body.appendChild(heart);
+    heart.onclick=()=>{
+      love+=5;
+      if(love>100) love=100;
+      document.getElementById("loveMeter").style.width=love+"%";
+      heart.remove();
+    };
+    setTimeout(()=>heart.remove(),4000);
+  },1500);
 }
 </script>
-
 </body>
 </html>
