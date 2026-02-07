@@ -1,183 +1,999 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Propose Day ❤️</title>
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI",sans-serif; }
-body { height:100vh; background: linear-gradient(135deg, #ff5f6d, #ffc371); display:flex; justify-content:center; align-items:center; overflow:hidden; color:white; position:relative; font-size:16px;}
-.card { background: rgba(255,255,255,0.18); backdrop-filter: blur(12px); border-radius:25px; padding:30px 20px; width:90%; max-width:400px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.25);}
-h1 { font-size:2rem; margin-bottom:10px; }
-.name { font-size:1.2rem; font-weight:bold; margin-bottom:15px; color:#fff; text-shadow:0 0 8px #fff,0 0 20px #ff4d6d; animation: glow 2s ease-in-out infinite alternate;}
-@keyframes glow {0% {text-shadow:0 0 8px #fff,0 0 20px #ff4d6d;} 100% {text-shadow:0 0 20px #fff,0 0 30px #ff4d6d;}}
-p { font-size:1rem; line-height:1.6; margin-bottom:15px;}
-button { border:none; padding:10px 20px; border-radius:30px; font-size:1rem; cursor:pointer; transition:0.3s ease;}
-#yesBtn { background:white; color:#ff4d6d; } #yesBtn:hover { transform:scale(1.08); background:#ffe1e9; }
-#noBtn { background:#ff4d6d; color:white; }
-.hidden { display:none; }
-.heart { position:fixed; bottom:-20px; font-size:20px; animation:floatUp 5s linear forwards; opacity:0.9; }
-#loveMeterContainer { width:80%; max-width:300px; height:18px; background:rgba(255,255,255,0.3); border-radius:10px; margin:10px auto; overflow:hidden; }
-#loveMeter { height:100%; width:0%; background:#ff4d6d; border-radius:10px; transition:width 0.3s ease; }
-.signature { margin-top:15px; font-size:0.9rem; font-weight:bold; opacity:0.8; }
-@keyframes floatUp { 0%{transform:translateY(0) scale(1) rotate(0deg); opacity:1;} 100%{transform:translateY(-100vh) scale(1.6) rotate(360deg); opacity:0;} }
-@media(max-width:400px){ .card{padding:20px 15px;} h1{font-size:1.8rem;} .name{font-size:1.1rem;} button{padding:8px 15px; font-size:0.9rem;} #loveMeterContainer{height:16px;} }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>For My Love 💖 |Kaluu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* MOBILE FIRST DESIGN */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overscroll-behavior: none;
+            touch-action: manipulation;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            color: #5d3d5c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: relative;
+        }
+        
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Cards - Mobile Optimized */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 95vw;
+            text-align: center;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.15),
+                0 1px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: none;
+            margin: 10px 0;
+            animation: fadeIn 0.4s ease-out;
+            position: relative;
+        }
+        
+        .card.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        /* Header - Mobile Friendly */
+        h1 {
+            font-size: clamp(1.8rem, 6vw, 2.2rem);
+            margin-bottom: 15px;
+            color: #ff4d6d;
+            font-weight: 700;
+            line-height: 1.2;
+            padding: 0 5px;
+        }
+        
+        /* Name Styling */
+        .name {
+            font-size: clamp(1.2rem, 5vw, 1.4rem);
+            font-weight: 600;
+            margin: 12px 0;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #ff6b9d, #ff8e53);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Paragraphs */
+        p {
+            font-size: clamp(1rem, 4vw, 1.1rem);
+            line-height: 1.6;
+            margin: 12px 0;
+            color: #444;
+            padding: 0 5px;
+        }
+        
+        .highlight {
+            color: #ff4d6d;
+            font-weight: 600;
+            font-size: clamp(1.1rem, 4.5vw, 1.2rem);
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
+        /* Buttons - Touch Friendly */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+            margin: 25px auto 0;
+        }
+        
+        button {
+            border: none;
+            padding: 18px 24px;
+            border-radius: 18px;
+            font-size: clamp(1rem, 4.5vw, 1.1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            touch-action: manipulation;
+            min-height: 58px;
+            user-select: none;
+        }
+        
+        button:active {
+            transform: scale(0.97);
+            box-shadow: 
+                0 2px 8px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        #yesBtn {
+            background: linear-gradient(145deg, #ff4d6d, #ff6b9d);
+            color: white;
+        }
+        
+        #noBtn {
+            background: #f0f0f0;
+            color: #666;
+        }
+        
+        #goGameBtn {
+            background: linear-gradient(145deg, #36d1dc, #5b86e5);
+            color: white;
+        }
+        
+        /* Love Messages */
+        .message-container {
+            min-height: 180px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 240, 245, 0.7);
+            border-radius: 20px;
+            border-left: 4px solid #ff4d6d;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        
+        .typing-text {
+            font-size: clamp(1rem, 4vw, 1.1rem);
+            line-height: 1.8;
+            color: #333;
+            text-align: left;
+        }
+        
+        /* Game Section */
+        .game-area {
+            margin: 20px 0;
+            width: 100%;
+        }
+        
+        .love-meter-container {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid #ffc3a0;
+        }
+        
+        #loveMeter {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff6b9d, #ff8e53);
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .meter-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        #heartContainer {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px dashed #ff6b9d;
+        }
+        
+        .game-heart {
+            position: absolute;
+            font-size: 40px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        /* Floating Hearts Background */
+        .floating-heart {
+            position: fixed;
+            font-size: 24px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+            animation: floatUp 6s linear forwards;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            border: 2px solid #ff4d6d;
+        }
+        
+        .music-control i {
+            font-size: 1.5rem;
+            color: #ff4d6d;
+        }
+        
+        /* Music Info */
+        .music-info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 10px 15px;
+            font-size: 0.8rem;
+            color: #ff4d6d;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            max-width: 200px;
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: #ff4d6d;
+            pointer-events: none;
+            opacity: 0.8;
+            border-radius: 50%;
+        }
+        
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff4d6d;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Portrait/Landscape adjustments */
+        @media (max-width: 380px) {
+            .card {
+                padding: 20px 15px;
+            }
+            
+            button {
+                padding: 16px 20px;
+                min-height: 54px;
+            }
+            
+            #heartContainer {
+                height: 250px;
+            }
+            
+            .music-info {
+                bottom: 85px;
+                left: 10px;
+                font-size: 0.7rem;
+            }
+        }
+        
+        @media (min-height: 700px) {
+            #heartContainer {
+                height: 350px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .buttons {
+                flex-direction: row;
+                max-width: 500px;
+            }
+            
+            button {
+                width: auto;
+                min-width: 160px;
+            }
+            
+            #heartContainer {
+                height: 400px;
+            }
+        }
+        
+        /* Hide scrollbar but allow scrolling */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #ff6b9d;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loadingScreen">
+        <div class="loader"></div>
+        <div class="loading-text">Loading our love story... 💖</div>
+    </div>
+    
+    <!-- Music Control -->
+    <div class="music-control" id="musicToggle">
+        <i class="fas fa-music"></i>
+    </div>
+    
+    <!-- Music Info -->
+    <div class="music-info" id="musicInfo">
+        <i class="fas fa-headphones"></i> Playing: Ji Chanta Matina
+    </div>
+    
+    <div class="container">
+        <!-- Page 1: Proposal -->
+        <div id="page1" class="card">
+            <h1>Happy Propose Day 💖</h1>
+            <div class="name">Susma Karki 🌸</div>
+            <p>From the moment you entered my life, everything became more beautiful.</p>
+            <p>Your smile is my favorite view, your laugh is my favorite sound.</p>
+            <p class="highlight">I want to spend every day loving you more than the day before.</p>
+            <p><strong>Will you make me the happiest person and be mine forever? 💍</strong></p>
+            
+            <div class="buttons">
+                <button id="yesBtn">
+                    <i class="fas fa-heart"></i> YES, I WILL! ❤️
+                </button>
+                <button id="noBtn">
+                    <i class="fas fa-times"></i> MAYBE LATER
+                </button>
+            </div>
+        </div>
+        
+        <!-- Page 2: Love Messages -->
+        <div id="page2" class="card">
+            <h1>My Heart's Message 💌</h1>
+            <div class="message-container">
+                <div id="loveMessage" class="typing-text"></div>
+            </div>
+            <div class="buttons">
+                <button id="goGameBtn">
+                    <i class="fas fa-gamepad"></i> LOVE MINI-GAME 💖
+                </button>
+            </div>
+        </div>
+        
+        <!-- Page 3: Mini-game -->
+        <div id="page3" class="card">
+            <h1>Collect Our Love 💕</h1>
+            <p>Tap the floating hearts to fill our love meter!</p>
+            <p>Collect as many hearts as you can!</p>
+            
+            <div class="game-area">
+                <div class="love-meter-container">
+                    <div id="loveMeter"></div>
+                </div>
+                <div class="meter-text">
+                    <span>0% Love</span>
+                    <span>100% Forever</span>
+                </div>
+            </div>
+            
+            <div id="heartContainer"></div>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Tap the hearts before they disappear!</p>
+        </div>
+    </div>
 
-<audio id="bgMusic" loop>
-  <source src="Ji Chanta Matina.m4a" type="audio/mp4">
-</audio>
+    <!-- Audio - Using YOUR music file -->
+    <audio id="bgMusic" loop preload="auto">
+        <!-- YOUR CUSTOM MUSIC FILE -->
+        <source src="Ji Chanta Matina.m4a" type="audio/mp4">
+        <source src="Ji Chanta Matina.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-<!-- Page 1: Proposal -->
-<div id="page1" class="card">
-  <h1>Happy Propose Day 💖</h1>
-  <div class="name">Susma Karki (Ney naa) 🌸</div>
-  <p>From the moment you entered my life, my world became warmer and brighter.</p>
-  <p>I don’t want perfect days, I just want <strong>you</strong> in every day.</p>
-  <p><strong>Will you be mine forever? 💍</strong></p>
-  <div class="buttons">
-    <button id="yesBtn">YES ❤️</button>
-    <button id="noBtn">NO 🙈</button>
-  </div>
-</div>
-
-<!-- Page 2: Love Messages -->
-<div id="page2" class="card hidden">
-  <h1>My Love for You 💖</h1>
-  <div id="loveMessage"></div>
-  <div class="buttons" style="margin-top:20px;">
-    <button id="goGameBtn">Play Love Mini-Game 💖</button>
-  </div>
-</div>
-
-<!-- Page 3: Mini-game -->
-<div id="page3" class="card hidden">
-  <h1>Catch the Hearts 💖</h1>
-  <p>Click the hearts to fill your love meter!</p>
-  <div id="loveMeterContainer">
-    <div id="loveMeter"></div>
-  </div>
-</div>
-
-<script>
-let yesClicked=false;
-let love=0;
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const goGameBtn=document.getElementById("goGameBtn");
-const music=document.getElementById("bgMusic");
-
-// Messages with typing effect
-const messages=[
-  "Yayyy! 😭❤️ You just made my heart the happiest place on earth.",
-  "I promise to choose you, love you, and stand by you always.",
-  "I love you, Susma 💖",
-  "I love you Sanu 💖",
-  "You make my world brighter every single day 🌸",
-  "Being with you is the best feeling ever 💖"
-];
-
-yesBtn.addEventListener("click", ()=>{
-  if(yesClicked) return;
-  yesClicked=true;
-  music.volume=0.6;
-  music.play().catch(()=>console.log("Click YES to play music"));
-  document.getElementById("page1").classList.add("hidden");
-  document.getElementById("page2").classList.remove("hidden");
-  typeMessages(0);
-});
-
-// NO button playful movement inside card
-noBtn.addEventListener("mouseover", ()=>{
-    const card = document.getElementById("page1");
-    const cardRect = card.getBoundingClientRect();
-    const btnRect = noBtn.getBoundingClientRect();
-    const maxX = cardRect.width - btnRect.width - 10;
-    const maxY = cardRect.height - btnRect.height - 10;
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-    noBtn.style.position = "absolute";
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
-    noBtn.style.transition = "0.3s ease";
-    noBtn.style.transform = `rotate(${Math.random()*30-15}deg)`;
-});
-
-// Typing messages one by one
-function typeMessages(index){
-  if(index>=messages.length) return;
-  const container=document.getElementById("loveMessage");
-  const p=document.createElement("p");
-  container.appendChild(p);
-  let text=messages[index];
-  let i=0;
-  function type(){
-    if(i<text.length){
-      p.innerHTML+=text[i];
-      i++;
-      setTimeout(type,50); // typing speed
-    }else{
-      setTimeout(()=>typeMessages(index+1),1000); // wait 1s then next message
-    }
-  }
-  type();
-}
-
-// Go to mini-game
-goGameBtn.addEventListener("click", ()=>{
-  document.getElementById("page2").classList.add("hidden");
-  document.getElementById("page3").classList.remove("hidden");
-  startLoveGame();
-});
-
-// Mini-game: catch hearts
-function startLoveGame(){
-  setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="💖";
-    heart.style.left=Math.random()*(window.innerWidth-30)+"px";
-    heart.style.top=Math.random()*(window.innerHeight-30)+"px";
-    heart.style.fontSize="25px";
-    heart.style.cursor="pointer";
-    document.body.appendChild(heart);
-    heart.onclick=()=>{
-      love+=5;
-      if(love>100) love=100;
-      document.getElementById("loveMeter").style.width=love+"%";
-      heart.remove();
-      if(love>=100) showConfetti();
-    };
-    setTimeout(()=>heart.remove(),4000);
-  },1500);
-}
-
-// Floating hearts in background
-setInterval(()=>{
-  const heart=document.createElement("div");
-  heart.className="heart";
-  heart.innerHTML="❤️";
-  heart.style.left=Math.random()*100+"vw";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),6000);
-},250);
-
-// Confetti when love meter full
-function showConfetti(){
-  for(let i=0;i<100;i++){
-    const conf=document.createElement("div");
-    conf.innerHTML="🎉";
-    conf.style.position="fixed";
-    conf.style.left=Math.random()*100+"vw";
-    conf.style.top=Math.random()*100+"vh";
-    conf.style.fontSize=Math.random()*24+16+"px";
-    conf.style.opacity=Math.random();
-    document.body.appendChild(conf);
-    setTimeout(()=>conf.remove(),4000);
-  }
-}
-</script>
+    <script>
+        // DOM Elements
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const page3 = document.getElementById('page3');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const goGameBtn = document.getElementById('goGameBtn');
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicInfo = document.getElementById('musicInfo');
+        const loveMessage = document.getElementById('loveMessage');
+        const loveMeter = document.getElementById('loveMeter');
+        const heartContainer = document.getElementById('heartContainer');
+        const loadingScreen = document.getElementById('loadingScreen');
+        
+        // Variables
+        let yesClicked = false;
+        let love = 0;
+        let gameStarted = false;
+        let musicPlaying = false;
+        let musicLoaded = false;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        // Love messages
+        const messages = [
+            "My dearest Susma, 💖",
+            "From the first moment I saw you, I knew you were special.",
+            "Every day with you feels like a beautiful dream.",
+            "Your smile lights up my world like nothing else.",
+            "I love the way you laugh, the way you care, everything about you.",
+            "You're not just my love, you're my best friend, my partner, my everything.",
+            "I promise to love you more with each passing day.",
+            "Will you make me the happiest man and be mine forever?",
+            "I love you more than words can express. 💕",
+            "Forever yours... ❤️"
+        ];
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+        });
+        
+        function init() {
+            // Hide loading screen after 2 seconds
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                page1.classList.add('active');
+            }, 2000);
+            
+            setupEventListeners();
+            setupTouchSupport();
+            setupMusic();
+            createFloatingHearts();
+        }
+        
+        // Setup Music
+        function setupMusic() {
+            // Show that we're trying to load the custom music
+            musicInfo.style.display = 'block';
+            musicInfo.innerHTML = '<i class="fas fa-music"></i> Loading your song...';
+            
+            // Try to load the music
+            music.load();
+            
+            // Check if music can play
+            music.addEventListener('canplaythrough', function() {
+                musicLoaded = true;
+                musicInfo.innerHTML = '<i class="fas fa-headphones"></i> Ready: Ji Chanta Matina';
+                console.log("Music loaded successfully!");
+            });
+            
+            // Handle music errors
+            music.addEventListener('error', function(e) {
+                console.error("Error loading music:", music.error);
+                musicInfo.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Using backup music';
+                musicInfo.style.background = 'rgba(255, 100, 100, 0.9)';
+                
+                // Try backup music URL if local file fails
+                setTimeout(() => {
+                    music.innerHTML = '<source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">';
+                    music.load();
+                }, 1000);
+            });
+            
+            // Update music info when playing
+            music.addEventListener('play', function() {
+                musicInfo.innerHTML = '<i class="fas fa-volume-up"></i> Playing: Ji Chanta Matina';
+                musicInfo.style.background = 'rgba(255, 255, 255, 0.9)';
+            });
+            
+            music.addEventListener('pause', function() {
+                musicInfo.innerHTML = '<i class="fas fa-volume-mute"></i> Paused';
+            });
+        }
+        
+        // Setup Event Listeners for both touch and click
+        function setupEventListeners() {
+            // YES Button - Both touch and click
+            yesBtn.addEventListener('click', handleYesClick);
+            yesBtn.addEventListener('touchend', handleYesClick);
+            
+            // NO Button - Mobile touch events
+            noBtn.addEventListener('touchstart', moveNoButton);
+            noBtn.addEventListener('click', handleNoClick);
+            
+            // Game Button
+            goGameBtn.addEventListener('click', () => switchToGame());
+            goGameBtn.addEventListener('touchend', () => switchToGame());
+            
+            // Music Toggle
+            musicToggle.addEventListener('click', toggleMusic);
+            musicToggle.addEventListener('touchend', toggleMusic);
+            
+            // Enable audio on first user interaction
+            const enableAudioOnce = () => {
+                enableAudio();
+                document.removeEventListener('touchstart', enableAudioOnce);
+                document.removeEventListener('click', enableAudioOnce);
+            };
+            document.addEventListener('touchstart', enableAudioOnce, { once: true });
+            document.addEventListener('click', enableAudioOnce, { once: true });
+        }
+        
+        // Setup Touch Support
+        function setupTouchSupport() {
+            // Prevent context menu on long press
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
+            
+            // Handle touch events for the game area
+            heartContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+            heartContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+        }
+        
+        // Handle YES click/tap
+        function handleYesClick(e) {
+            e.preventDefault();
+            if (yesClicked) return;
+            yesClicked = true;
+            
+            // Play music if not already playing
+            if (!musicPlaying && musicLoaded) {
+                music.volume = 0.6;
+                music.play().then(() => {
+                    musicPlaying = true;
+                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    musicInfo.innerHTML = '<i class="fas fa-volume-up"></i> Playing: Ji Chanta Matina';
+                }).catch((error) => {
+                    console.log("Music play failed:", error);
+                    musicInfo.innerHTML = '<i class="fas fa-exclamation-circle"></i> Tap to play music';
+                });
+            }
+            
+            // Switch to page 2
+            switchPage(page1, page2);
+            
+            // Start typing messages
+            typeMessages(0);
+        }
+        
+        // Handle NO button
+        function handleNoClick() {
+            noBtn.innerHTML = '<i class="fas fa-heart-broken"></i> PLEASE SAY YES';
+            noBtn.style.background = 'linear-gradient(145deg, #ff9999, #ff6666)';
+            noBtn.style.color = 'white';
+            setTimeout(() => {
+                noBtn.innerHTML = '<i class="fas fa-times"></i> MAYBE LATER';
+                noBtn.style.background = '#f0f0f0';
+                noBtn.style.color = '#666';
+            }, 1500);
+        }
+        
+        // Move NO button on mobile touch
+        function moveNoButton(e) {
+            e.preventDefault();
+            const card = page1.getBoundingClientRect();
+            const maxX = card.width - noBtn.offsetWidth - 30;
+            const maxY = card.height - noBtn.offsetHeight - 30;
+            
+            // Move button to random position within card
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
+            noBtn.style.transition = 'all 0.3s ease';
+        }
+        
+        // Toggle Music
+        function toggleMusic(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (!musicLoaded) {
+                musicInfo.innerHTML = '<i class="fas fa-sync fa-spin"></i> Loading...';
+                music.load();
+                setTimeout(() => {
+                    if (music.error) {
+                        musicInfo.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Music file not found';
+                        return;
+                    }
+                }, 1000);
+                return;
+            }
+            
+            if (musicPlaying) {
+                music.pause();
+                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                musicInfo.innerHTML = '<i class="fas fa-volume-mute"></i> Paused';
+            } else {
+                music.volume = 0.6;
+                music.play().then(() => {
+                    musicPlaying = true;
+                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    musicInfo.innerHTML = '<i class="fas fa-volume-up"></i> Playing: Ji Chanta Matina';
+                }).catch((error) => {
+                    console.log("Play failed:", error);
+                    musicInfo.innerHTML = '<i class="fas fa-exclamation-circle"></i> Tap page to enable audio';
+                });
+            }
+            musicPlaying = !musicPlaying;
+        }
+        
+        // Enable audio
+        function enableAudio() {
+            if (!musicPlaying && musicLoaded) {
+                music.volume = 0.4;
+                music.play().then(() => {
+                    musicPlaying = true;
+                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    musicInfo.innerHTML = '<i class="fas fa-volume-up"></i> Playing: Ji Chanta Matina';
+                }).catch((error) => {
+                    console.log("Auto-play blocked:", error);
+                    musicInfo.innerHTML = '<i class="fas fa-hand-pointer"></i> Tap music button to play';
+                });
+            }
+        }
+        
+        // Switch to Game
+        function switchToGame() {
+            switchPage(page2, page3);
+            startLoveGame();
+        }
+        
+        // Switch Pages
+        function switchPage(fromPage, toPage) {
+            fromPage.classList.remove('active');
+            setTimeout(() => {
+                toPage.classList.add('active');
+            }, 300);
+        }
+        
+        // Type Messages Effect
+        function typeMessages(index) {
+            if (index >= messages.length) return;
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-line';
+            loveMessage.appendChild(messageDiv);
+            
+            const text = messages[index];
+            let charIndex = 0;
+            
+            function typeChar() {
+                if (charIndex < text.length) {
+                    messageDiv.innerHTML += text.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeChar, 50);
+                } else {
+                    messageDiv.innerHTML += '<br><br>';
+                    setTimeout(() => typeMessages(index + 1), 800);
+                }
+            }
+            
+            typeChar();
+        }
+        
+        // Start Love Game
+        function startLoveGame() {
+            if (gameStarted) return;
+            gameStarted = true;
+            love = 0;
+            loveMeter.style.width = '0%';
+            loveMeter.textContent = '';
+            
+            // Clear any existing hearts
+            heartContainer.innerHTML = '';
+            
+            // Create hearts to tap
+            function createClickableHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.className = 'game-heart';
+                heart.style.left = Math.random() * 80 + 10 + '%';
+                heart.style.top = Math.random() * 70 + 15 + '%';
+                heart.style.fontSize = Math.random() * 20 + 35 + 'px';
+                heart.style.opacity = '0.9';
+                
+                // Touch events for mobile
+                heart.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    heart.style.transform = 'scale(1.2)';
+                });
+                
+                heart.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    collectHeart(heart);
+                });
+                
+                // Click events for desktop
+                heart.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    collectHeart(heart);
+                });
+                
+                heartContainer.appendChild(heart);
+                
+                // Remove heart after 5 seconds if not tapped
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.style.opacity = '0';
+                        heart.style.transition = 'opacity 0.8s';
+                        setTimeout(() => {
+                            if (heart.parentNode) heart.remove();
+                        }, 800);
+                    }
+                }, 5000);
+            }
+            
+            // Collect heart function
+            function collectHeart(heart) {
+                // Increase love
+                love += 8;
+                if (love > 100) love = 100;
+                
+                // Update meter
+                loveMeter.style.width = love + '%';
+                loveMeter.textContent = love + '%';
+                
+                // Create collection animation
+                createHeartAnimation(heart.getBoundingClientRect());
+                
+                // Remove heart
+                heart.remove();
+                
+                // Check if love is full
+                if (love >= 100) {
+                    showConfetti();
+                    setTimeout(() => {
+                        alert('🎉 You filled our love meter! My heart is completely yours! 💖\n\nNow will you marry me? 💍');
+                    }, 500);
+                }
+                
+                // Create new heart after a delay
+                setTimeout(createClickableHeart, 300);
+            }
+            
+            // Start creating hearts
+            for (let i = 0; i < 4; i++) {
+                setTimeout(createClickableHeart, i * 800);
+            }
+            
+            // Keep creating hearts
+            const heartInterval = setInterval(createClickableHeart, 2000);
+            
+            // Clear interval if page changes
+            const clearIntervalOnPageChange = () => {
+                clearInterval(heartInterval);
+                document.removeEventListener('pageChanged', clearIntervalOnPageChange);
+            };
+            document.addEventListener('pageChanged', clearIntervalOnPageChange);
+        }
+        
+        // Handle touch events for game area
+        function handleTouchStart(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }
+        
+        function handleTouchEnd(e) {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            
+            // Check if it was a tap (not a swipe)
+            const deltaX = Math.abs(touchEndX - touchStartX);
+            const deltaY = Math.abs(touchEndY - touchStartY);
+            
+            if (deltaX < 10 && deltaY < 10) {
+                // It's a tap, check if we tapped a heart
+                const element = document.elementFromPoint(touchEndX, touchEndY);
+                if (element && element.classList.contains('game-heart')) {
+                    element.click();
+                }
+            }
+        }
+        
+        // Create Heart Animation when collected
+        function createHeartAnimation(position) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.style.position = 'fixed';
+            heart.style.left = position.x + 'px';
+            heart.style.top = position.y + 'px';
+            heart.style.fontSize = '40px';
+            heart.style.opacity = '1';
+            heart.style.transition = 'all 0.8s ease-out';
+            heart.style.zIndex = '1000';
+            heart.style.pointerEvents = 'none';
+            
+            document.body.appendChild(heart);
+            
+            // Animate
+            setTimeout(() => {
+                heart.style.transform = 'translateY(-80px) scale(1.8)';
+                heart.style.opacity = '0';
+            }, 10);
+            
+            // Remove after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 1000);
+        }
+        
+        // Create Floating Hearts Background
+        function createFloatingHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                heart.style.color = getRandomHeartColor();
+                heart.style.pointerEvents = 'none';
+                
+                document.body.appendChild(heart);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.remove();
+                    }
+                }, 6000);
+            }, 800);
+        }
+        
+        // Show Confetti when love meter is full
+        function showConfetti() {
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-20px';
+                    confetti.style.backgroundColor = getRandomHeartColor();
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confetti.style.pointerEvents = 'none';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    // Animate
+                    const animation = confetti.animate([
+                        { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
+                        { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 2000 + 1500,
+                        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                    });
+                    
+                    // Remove after animation
+                    animation.onfinish = () => {
+                        if (confetti.parentNode) {
+                            confetti.remove();
+                        }
+                    };
+                }, i * 20);
+            }
+        }
+        
+        // Helper function for random heart colors
+        function getRandomHeartColor() {
+            const colors = ['#ff4d6d', '#ff6b9d', '#ff8e53', '#ffb347', '#ff9999', '#ff6666', '#ff85a2', '#ff9770'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
 </body>
 </html>
