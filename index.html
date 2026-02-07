@@ -33,8 +33,8 @@ button { border:none; padding:12px 26px; border-radius:30px; font-size:1rem; cur
 
 <!-- 🎵 Background Music -->
 <audio id="bgMusic" loop>
-  <source src="https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/laakhau-hajara.m4a" type="audio/mp4">
-
+  <source src="Ji Chanta Matina.m4a" type="audio/mp4">
+  Your browser does not support audio.
 </audio>
 
 <!-- Love Meter -->
@@ -66,13 +66,14 @@ button { border:none; padding:12px 26px; border-radius:30px; font-size:1rem; cur
 <script>
 let love = 0;
 
+// Only start music when YES is clicked
 function startMusic() {
   const music = document.getElementById("bgMusic");
   music.volume = 0.6;
-  music.play().catch(()=>console.log("Click YES to play music")); // browser gesture required
+  music.play().catch(()=>console.log("Click YES to play music"));
 }
 
-// Only runs when YES is clicked
+// Typing effect for proposal lines
 function typeText() {
   const lines = ["line1","line2","line3"];
   const text = [
@@ -85,12 +86,13 @@ function typeText() {
     if(j<text[i].length){
       document.getElementById(lines[i]).innerHTML += text[i][j];
       j++; setTimeout(type,40);
-    }else{i++; j=0; if(i<lines.length){document.getElementById(lines[i]).style.opacity=1; type();}}
+    } else { i++; j=0; if(i<lines.length){document.getElementById(lines[i]).style.opacity=1; type();}}
   }
   document.getElementById(lines[0]).style.opacity=1;
   type();
 }
 
+// YES button click
 function sayYes(){
   document.getElementById("loveMessage").classList.remove("hidden");
   startMusic();
@@ -100,6 +102,7 @@ function sayYes(){
   showMessagesSequential();
 }
 
+// NO button dodge forever
 function escapeNo(){
   const noBtn = document.getElementById("noBtn");
   const rect = noBtn.getBoundingClientRect();
@@ -112,7 +115,7 @@ function escapeNo(){
   noBtn.style.transform=`rotate(${Math.random()*30-15}deg)`;
 }
 
-// Floating hearts
+// Floating hearts animation
 function createHearts(){
   setInterval(()=>{
     const heart=document.createElement("div");
@@ -124,7 +127,7 @@ function createHearts(){
   },250);
 }
 
-// Sequential love messages
+// Sequential love messages after YES
 function showMessagesSequential(){
   const msgs=["msg1","msg2","msg3"];
   let i=0;
@@ -146,7 +149,7 @@ function showMessagesSequential(){
   showNext();
 }
 
-// Mini-game: catch hearts
+// Mini-game: catch hearts for love meter
 function startLoveGame(){
   setInterval(()=>{
     const heart=document.createElement("div");
@@ -167,5 +170,6 @@ function startLoveGame(){
   },1500);
 }
 </script>
+
 </body>
 </html>
