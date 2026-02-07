@@ -26,7 +26,6 @@ button { border:none; padding:10px 20px; border-radius:30px; font-size:1rem; cur
 </head>
 <body>
 
-<!-- Audio -->
 <audio id="bgMusic" loop>
   <source src="Ji Chanta Matina.m4a" type="audio/mp4">
 </audio>
@@ -47,11 +46,7 @@ button { border:none; padding:10px 20px; border-radius:30px; font-size:1rem; cur
 <!-- Page 2: Love Messages -->
 <div id="page2" class="card hidden">
   <h1>My Love for You 💖</h1>
-  <div id="loveMessage">
-    <p id="msg1" class="hidden">Yayyy! 😭❤️ You just made my heart the happiest place on earth.</p>
-    <p id="msg2" class="hidden">I promise to choose you, love you, and stand by you always.</p>
-    <p id="msg3" class="hidden"><strong>I love you, Susma 💖</strong></p>
-  </div>
+  <div id="loveMessage"></div>
   <div class="buttons" style="margin-top:20px;">
     <button id="goGameBtn">Play Love Mini-Game 💖</button>
   </div>
@@ -67,59 +62,70 @@ button { border:none; padding:10px 20px; border-radius:30px; font-size:1rem; cur
 </div>
 
 <script>
-let yesClicked = false;
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const goGameBtn = document.getElementById("goGameBtn");
-const music = document.getElementById("bgMusic");
-let love = 0;
+let yesClicked=false;
+let love=0;
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const goGameBtn=document.getElementById("goGameBtn");
+const music=document.getElementById("bgMusic");
 
-// YES button → Page 2
+// Messages with typing effect
+const messages=[
+  "Yayyy! 😭❤️ You just made my heart the happiest place on earth.",
+  "I promise to choose you, love you, and stand by you always.",
+  "I love you, Susma 💖",
+  "I love you Sanu 💖",
+  "You make my world brighter every single day 🌸",
+  "Being with you is the best feeling ever 💖"
+];
+
 yesBtn.addEventListener("click", ()=>{
   if(yesClicked) return;
-  yesClicked = true;
+  yesClicked=true;
   music.volume=0.6;
   music.play().catch(()=>console.log("Click YES to play music"));
   document.getElementById("page1").classList.add("hidden");
   document.getElementById("page2").classList.remove("hidden");
-  showMessagesSequential();
+  typeMessages(0);
 });
 
-// NO button dodges forever
+// NO button playful movement inside card
 noBtn.addEventListener("mouseover", ()=>{
-  const rect=noBtn.getBoundingClientRect();
-  const maxX=window.innerWidth - rect.width -10;
-  const maxY=window.innerHeight - rect.height -10;
-  noBtn.style.position="fixed";
-  noBtn.style.left=Math.random()*maxX+"px";
-  noBtn.style.top=Math.random()*maxY+"px";
-  noBtn.style.transition="0.3s ease";
-  noBtn.style.transform=`rotate(${Math.random()*30-15}deg)`;
+    const card = document.getElementById("page1");
+    const cardRect = card.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+    const maxX = cardRect.width - btnRect.width - 10;
+    const maxY = cardRect.height - btnRect.height - 10;
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+    noBtn.style.position = "absolute";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+    noBtn.style.transition = "0.3s ease";
+    noBtn.style.transform = `rotate(${Math.random()*30-15}deg)`;
 });
 
-// Sequential messages
-function showMessagesSequential(){
-  const msgs=["msg1","msg2","msg3"];
+// Typing messages one by one
+function typeMessages(index){
+  if(index>=messages.length) return;
+  const container=document.getElementById("loveMessage");
+  const p=document.createElement("p");
+  container.appendChild(p);
+  let text=messages[index];
   let i=0;
-  function showNext(){
-    if(i<msgs.length){
-      const el=document.getElementById(msgs[i]);
-      el.classList.remove("hidden");
-      el.style.opacity=0;
-      let opacity=0;
-      let interval=setInterval(()=>{
-        opacity+=0.05;
-        el.style.opacity=opacity;
-        if(opacity>=1) clearInterval(interval);
-      },50);
+  function type(){
+    if(i<text.length){
+      p.innerHTML+=text[i];
       i++;
-      setTimeout(showNext,2000);
+      setTimeout(type,50); // typing speed
+    }else{
+      setTimeout(()=>typeMessages(index+1),1000); // wait 1s then next message
     }
   }
-  showNext();
+  type();
 }
 
-// Go to mini-game → Page 3
+// Go to mini-game
 goGameBtn.addEventListener("click", ()=>{
   document.getElementById("page2").classList.add("hidden");
   document.getElementById("page3").classList.remove("hidden");
@@ -142,12 +148,13 @@ function startLoveGame(){
       if(love>100) love=100;
       document.getElementById("loveMeter").style.width=love+"%";
       heart.remove();
+      if(love>=100) showConfetti();
     };
     setTimeout(()=>heart.remove(),4000);
   },1500);
 }
 
-// Floating hearts in background (optional)
+// Floating hearts in background
 setInterval(()=>{
   const heart=document.createElement("div");
   heart.className="heart";
@@ -156,7 +163,21 @@ setInterval(()=>{
   document.body.appendChild(heart);
   setTimeout(()=>heart.remove(),6000);
 },250);
-</script>
 
+// Confetti when love meter full
+function showConfetti(){
+  for(let i=0;i<100;i++){
+    const conf=document.createElement("div");
+    conf.innerHTML="🎉";
+    conf.style.position="fixed";
+    conf.style.left=Math.random()*100+"vw";
+    conf.style.top=Math.random()*100+"vh";
+    conf.style.fontSize=Math.random()*24+16+"px";
+    conf.style.opacity=Math.random();
+    document.body.appendChild(conf);
+    setTimeout(()=>conf.remove(),4000);
+  }
+}
+</script>
 </body>
 </html>
