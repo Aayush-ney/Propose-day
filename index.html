@@ -44,12 +44,21 @@ h1 {
   font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 0 0 8px #fff, 0 0 20px #ff4d6d;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 8px #fff, 0 0 20px #ff4d6d; }
+  100% { text-shadow: 0 0 20px #fff, 0 0 30px #ff4d6d; }
 }
 
 p {
   font-size: 1.05rem;
   line-height: 1.7;
   margin-bottom: 18px;
+  opacity: 0;
 }
 
 .buttons {
@@ -74,8 +83,8 @@ button {
 }
 
 #yesBtn:hover {
-  background: #ffe1e9;
   transform: scale(1.08);
+  background: #ffe1e9;
 }
 
 #noBtn {
@@ -95,22 +104,35 @@ button {
   opacity: 0.9;
 }
 
+.signature {
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-100vh) scale(1.6); opacity: 0; }
+  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.6) rotate(360deg); opacity: 0; }
 }
 
 @keyframes shake {
   0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
+  25% { transform: translateX(-6px) rotate(-5deg); }
+  50% { transform: translateX(6px) rotate(5deg); }
+  75% { transform: translateX(-6px) rotate(-5deg); }
   100% { transform: translateX(0); }
+}
+
+@keyframes typewriter {
+  from { width: 0; opacity: 1; }
+  to { width: 100%; opacity: 1; }
 }
 </style>
 </head>
@@ -119,7 +141,7 @@ button {
 
 <!-- 🎵 Background Music -->
 <audio id="bgMusic" loop>
-  <source src="Ji%20Chanta%20Matina.m4a" type="audio/mp4">
+  <source src="https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/laakhau-hajara.m4a" type="audio/mp4">
   Your browser does not support audio.
 </audio>
 
@@ -127,23 +149,13 @@ button {
   <h1>Happy Propose Day 💖</h1>
   <div class="name">Susma Karki (Ney naa) 🌸</div>
 
-  <p>
-    From the moment you entered my life,<br>
-    my world became warmer and brighter.
-  </p>
-
-  <p>
-    I don’t want perfect days,<br>
-    I just want <strong>you</strong> in every day.
-  </p>
-
-  <p><strong>Will you be mine forever? 💍</strong></p>
+  <p id="line1">From the moment you entered my life, my world became warmer and brighter.</p>
+  <p id="line2">I don’t want perfect days, I just want <strong>you</strong> in every day.</p>
+  <p id="line3"><strong>Will you be mine forever? 💍</strong></p>
 
   <div class="buttons">
     <button id="yesBtn" onclick="sayYes()">YES ❤️</button>
-    <button id="noBtn"
-            onclick="escapeNo()"
-            onmouseover="escapeNo()">NO 🙈</button>
+    <button id="noBtn" onmouseover="escapeNo()">NO 🙈</button>
   </div>
 
   <div id="loveMessage" class="hidden">
@@ -154,12 +166,12 @@ button {
       and stand by you always.<br><br>
       <strong>I love you, Susma 💖</strong>
     </p>
+    <div class="signature">— Aayush Maka</div>
   </div>
 </div>
 
 <script>
 let musicStarted = false;
-let noCount = 0;
 
 function startMusic() {
   if (!musicStarted) {
@@ -167,7 +179,43 @@ function startMusic() {
     music.volume = 0.6;
     music.play();
     musicStarted = true;
+    typeText(); // Start typing messages
   }
+}
+
+// Typing animation for messages
+function typeText() {
+  const lines = ["line1","line2","line3"];
+  let i = 0;
+  let j = 0;
+  let currentLine = document.getElementById(lines[i]);
+  currentLine.style.opacity = 1;
+  currentLine.innerHTML = "";
+
+  function type() {
+    if(j < text[i].length) {
+      currentLine.innerHTML += text[i][j];
+      j++;
+      setTimeout(type, 40);
+    } else {
+      i++;
+      j=0;
+      if(i < lines.length) {
+        currentLine = document.getElementById(lines[i]);
+        currentLine.style.opacity = 1;
+        currentLine.innerHTML = "";
+        type();
+      }
+    }
+  }
+
+  const text = [
+    "From the moment you entered my life, my world became warmer and brighter.",
+    "I don’t want perfect days, I just want you in every day.",
+    "Will you be mine forever? 💍"
+  ];
+
+  type();
 }
 
 function sayYes() {
@@ -178,14 +226,6 @@ function sayYes() {
 
 function escapeNo() {
   const noBtn = document.getElementById("noBtn");
-
-  if (noCount < 2) {
-    noBtn.style.animation = "shake 0.4s";
-    setTimeout(() => noBtn.style.animation = "", 400);
-    noCount++;
-    return;
-  }
-
   const rect = noBtn.getBoundingClientRect();
   const maxX = window.innerWidth - rect.width - 10;
   const maxY = window.innerHeight - rect.height - 10;
@@ -194,6 +234,7 @@ function escapeNo() {
   noBtn.style.left = Math.random() * maxX + "px";
   noBtn.style.top = Math.random() * maxY + "px";
   noBtn.style.transition = "0.3s ease";
+  noBtn.style.transform = `rotate(${Math.random()*30-15}deg)`; // rotate slightly
 }
 
 function createHearts() {
