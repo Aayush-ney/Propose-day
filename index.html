@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Propose Day ❤️</title>
+<title>Happy Propose Day ❤️</title>
 
 <style>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 body {
@@ -24,7 +24,7 @@ body {
 }
 
 .card {
-  background: rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(12px);
   border-radius: 25px;
   padding: 40px 30px;
@@ -49,7 +49,7 @@ h1 {
 p {
   font-size: 1.05rem;
   line-height: 1.7;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .buttons {
@@ -61,7 +61,7 @@ p {
 
 button {
   border: none;
-  padding: 12px 25px;
+  padding: 12px 26px;
   border-radius: 30px;
   font-size: 1rem;
   cursor: pointer;
@@ -81,7 +81,6 @@ button {
 #noBtn {
   background: #ff4d6d;
   color: white;
-  position: relative;
 }
 
 .hidden {
@@ -89,10 +88,10 @@ button {
 }
 
 .heart {
-  position: absolute;
+  position: fixed;
   bottom: -20px;
   font-size: 20px;
-  animation: floatUp 5s linear infinite;
+  animation: floatUp 5s linear forwards;
   opacity: 0.9;
 }
 
@@ -105,13 +104,22 @@ button {
   0% { transform: translateY(0) scale(1); opacity: 1; }
   100% { transform: translateY(-100vh) scale(1.6); opacity: 0; }
 }
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
 </style>
 </head>
 
 <body onclick="startMusic()">
 
+<!-- 🎵 Background Music -->
 <audio id="bgMusic" loop>
-  <source src="love-song.mp3" type="audio/mpeg">
+  <source src="Ji%20Chanta%20Matina.m4a" type="audio/mp4">
   Your browser does not support audio.
 </audio>
 
@@ -120,34 +128,38 @@ button {
   <div class="name">Susma Karki (Ney naa) 🌸</div>
 
   <p>
-    From the day you came into my life,<br>
-    my world started smiling more.
+    From the moment you entered my life,<br>
+    my world became warmer and brighter.
   </p>
 
   <p>
-    I don’t want perfect moments,<br>
-    I just want <strong>you</strong> in every moment.
+    I don’t want perfect days,<br>
+    I just want <strong>you</strong> in every day.
   </p>
 
   <p><strong>Will you be mine forever? 💍</strong></p>
 
   <div class="buttons">
     <button id="yesBtn" onclick="sayYes()">YES ❤️</button>
-    <button id="noBtn" onmouseover="moveNo()">NO 🙈</button>
+    <button id="noBtn"
+            onclick="escapeNo()"
+            onmouseover="escapeNo()">NO 🙈</button>
   </div>
 
   <div id="loveMessage" class="hidden">
-    <p style="margin-top:20px;">
+    <p style="margin-top:22px;">
       Yayyy! 😭❤️<br><br>
-      You just made me the happiest person alive.<br>
-      I promise to love you endlessly.<br><br>
-      <strong>I love you, Susma. 💖</strong>
+      You just made my heart the happiest place on earth.<br>
+      I promise to choose you, love you,<br>
+      and stand by you always.<br><br>
+      <strong>I love you, Susma 💖</strong>
     </p>
   </div>
 </div>
 
 <script>
 let musicStarted = false;
+let noCount = 0;
 
 function startMusic() {
   if (!musicStarted) {
@@ -164,11 +176,24 @@ function sayYes() {
   createHearts();
 }
 
-function moveNo() {
+function escapeNo() {
   const noBtn = document.getElementById("noBtn");
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 200 - 100;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+  if (noCount < 2) {
+    noBtn.style.animation = "shake 0.4s";
+    setTimeout(() => noBtn.style.animation = "", 400);
+    noCount++;
+    return;
+  }
+
+  const rect = noBtn.getBoundingClientRect();
+  const maxX = window.innerWidth - rect.width - 10;
+  const maxY = window.innerHeight - rect.height - 10;
+
+  noBtn.style.position = "fixed";
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+  noBtn.style.transition = "0.3s ease";
 }
 
 function createHearts() {
@@ -177,7 +202,6 @@ function createHearts() {
     heart.className = "heart";
     heart.innerHTML = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 6000);
   }, 250);
