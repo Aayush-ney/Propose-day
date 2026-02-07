@@ -192,36 +192,39 @@
             text-align: left;
         }
         
-        /* Game Section - HARDER MODE */
+        /* Game Section - WITH BOMBS */
         .game-area {
             margin: 20px 0;
             width: 100%;
         }
         
         .game-stats {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
             margin-bottom: 15px;
-            font-size: 0.9rem;
-            color: #666;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 10px 15px;
-            border-radius: 15px;
         }
         
         .stat-box {
             text-align: center;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px 5px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
         
         .stat-value {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: #ff4d6d;
+            display: block;
         }
         
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #666;
+            display: block;
+            margin-top: 3px;
         }
         
         .love-meter-container {
@@ -256,7 +259,7 @@
             color: #666;
         }
         
-        /* Game Container - Smaller hearts, faster movement */
+        /* Game Container */
         #heartContainer {
             position: relative;
             width: 100%;
@@ -268,25 +271,62 @@
             border: 2px dashed #ff6b9d;
         }
         
+        /* Heart Styling */
         .game-heart {
             position: absolute;
-            font-size: 28px; /* Smaller hearts */
+            font-size: 30px;
             cursor: pointer;
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
             z-index: 10;
             user-select: none;
             -webkit-user-select: none;
-            animation: floatHeart 3s infinite alternate ease-in-out;
+            animation: pulse 1.5s infinite alternate;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         
-        @keyframes floatHeart {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-15px) rotate(5deg); }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
         
-        .heart-missed {
-            opacity: 0.4;
-            filter: grayscale(0.7);
+        /* Bomb Styling */
+        .game-bomb {
+            position: absolute;
+            font-size: 32px;
+            cursor: pointer;
+            z-index: 10;
+            user-select: none;
+            -webkit-user-select: none;
+            animation: shake 0.5s infinite alternate, rotateBomb 3s linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(-2px); }
+            100% { transform: translateX(2px); }
+        }
+        
+        @keyframes rotateBomb {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bomb-warning {
+            background: rgba(255, 50, 50, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin: 10px auto;
+            display: inline-block;
+            animation: warningPulse 1s infinite;
+        }
+        
+        @keyframes warningPulse {
+            0% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.7; transform: scale(1); }
         }
         
         /* Timer */
@@ -303,6 +343,26 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
         
+        .timer.warning {
+            background: rgba(255, 100, 50, 0.9);
+            animation: timerWarning 1s infinite;
+        }
+        
+        .timer.danger {
+            background: rgba(255, 50, 50, 0.9);
+            animation: timerDanger 0.5s infinite;
+        }
+        
+        @keyframes timerWarning {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes timerDanger {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
         /* Difficulty Level */
         .difficulty {
             display: inline-block;
@@ -312,7 +372,7 @@
             border-radius: 20px;
             font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         /* Floating Hearts Background */
@@ -363,6 +423,34 @@
         .music-control i {
             font-size: 1.5rem;
             color: #ff4d6d;
+        }
+        
+        /* Music Status */
+        .music-status {
+            position: fixed;
+            bottom: 85px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            color: #ff4d6d;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 99;
+        }
+        
+        .music-status.show {
+            display: block;
+            animation: fadeInOut 3s forwards;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
         }
         
         /* Loading Screen */
@@ -470,8 +558,20 @@
                 height: 300px;
             }
             
-            .game-heart {
-                font-size: 24px;
+            .game-heart, .game-bomb {
+                font-size: 26px;
+            }
+            
+            .stat-box {
+                padding: 8px 3px;
+            }
+            
+            .stat-value {
+                font-size: 1.1rem;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
             }
         }
         
@@ -494,6 +594,12 @@
             
             #heartContainer {
                 height: 450px;
+            }
+            
+            .game-stats {
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
         
@@ -525,9 +631,12 @@
         <i class="fas fa-music"></i>
     </div>
     
+    <!-- Music Status -->
+    <div class="music-status" id="musicStatus"></div>
+    
     <div class="container">
         <!-- Page 1: Proposal -->
-        <div id="page1" class="card active">
+        <div id="page1" class="card">
             <h1>Happy Propose Day 💖</h1>
             <div class="name">Susma Karki 🌸</div>
             <p>From the moment you entered my life, everything became more beautiful.</p>
@@ -561,22 +670,23 @@
         <!-- Page 3: Mini-game -->
         <div id="page3" class="card">
             <h1>Prove Your Love 💕</h1>
-            <p class="difficulty">Try gara😁</p>
-            <p>Catch the moving hearts before they disappear!</p>
-            <p>You need 50 hearts in 60 seconds to win my heart! ⏰</p>
+            <p class="difficulty">EXTREME MODE 💣⚡</p>
+            <p>Catch hearts 💖 but avoid bombs 💣!</p>
+            <div class="bomb-warning">WARNING: Bombs decrease score by 3!</div>
+            <p>Collect 35 hearts in <strong>40 seconds</strong> to win! ⏰</p>
             
             <div class="game-stats">
                 <div class="stat-box">
-                    <div class="stat-value" id="score">0</div>
-                    <div class="stat-label">Hearts</div>
+                    <span class="stat-value" id="score">0</span>
+                    <span class="stat-label">Hearts 💖</span>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-value" id="missed">0</div>
-                    <div class="stat-label">Missed</div>
+                    <span class="stat-value" id="timeLeft">40</span>
+                    <span class="stat-label">Seconds ⏰</span>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-value" id="accuracy">0%</div>
-                    <div class="stat-label">Accuracy</div>
+                    <span class="stat-value" id="bombs">0</span>
+                    <span class="stat-label">Bombs 💣</span>
                 </div>
             </div>
             
@@ -585,8 +695,8 @@
                     <div id="loveMeter"></div>
                 </div>
                 <div class="meter-text">
-                    <span>My Heart</span>
-                    <span>Your Love</span>
+                    <span>0%</span>
+                    <span>100%</span>
                 </div>
             </div>
             
@@ -598,15 +708,21 @@
                     <button class="retry-btn" id="retryBtn">Try Again 💘</button>
                 </div>
             </div>
-            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Hearts move and disappear quickly! Be fast! ⚡</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Tap hearts 💖 (+1) | Avoid bombs 💣 (-3)</p>
         </div>
     </div>
 
-    <!-- Audio - Using YOUR music file -->
-    <audio id="bgMusic" loop preload="auto">
-        <!-- YOUR CUSTOM MUSIC FILE -->
+    <!-- Audio - Using YOUR music file with multiple formats for compatibility -->
+    <audio id="bgMusic" loop>
+        <!-- Primary: Your M4A file -->
         <source src="Ji Chanta Matina.m4a" type="audio/mp4">
-  
+        <!-- Fallback 1: Try without extension -->
+        <source src="Ji Chanta Matina" type="audio/mp4">
+        <!-- Fallback 2: MP3 format (if you convert it) -->
+        <source src="Ji Chanta Matina.mp3" type="audio/mpeg">
+        <!-- Fallback 3: Online romantic music -->
+        <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
     </audio>
 
     <script>
@@ -619,36 +735,35 @@
         const goGameBtn = document.getElementById('goGameBtn');
         const music = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
+        const musicStatus = document.getElementById('musicStatus');
         const loveMessage = document.getElementById('loveMessage');
         const loveMeter = document.getElementById('loveMeter');
         const heartContainer = document.getElementById('heartContainer');
         const loadingScreen = document.getElementById('loadingScreen');
         const scoreDisplay = document.getElementById('score');
-        const missedDisplay = document.getElementById('missed');
-        const accuracyDisplay = document.getElementById('accuracy');
+        const timeDisplay = document.getElementById('timeLeft');
+        const bombsDisplay = document.getElementById('bombs');
         const timerDisplay = document.getElementById('timer');
         const gameOverScreen = document.getElementById('gameOver');
         const gameResult = document.getElementById('gameResult');
         const gameMessage = document.getElementById('gameMessage');
         const retryBtn = document.getElementById('retryBtn');
         
-        // Game Variables - HARD MODE
+        // Game Variables
         let yesClicked = false;
         let gameStarted = false;
         let musicPlaying = false;
-        let musicLoaded = false;
         let gameActive = false;
         
-        // Game Stats
+        // Game Stats - 40 SECOND TIMER
         let score = 0;
-        let missed = 0;
-        let accuracy = 0;
-        let timeLeft = 60;
+        let timeLeft = 40;
+        let bombsHit = 0;
         let gameTimer = null;
-        let heartSpeed = 800; // Hearts appear faster
-        let heartLife = 2000; // Hearts disappear faster
-        let movingHearts = [];
-        let totalHearts = 0;
+        let activeObjects = [];
+        let bombChance = 0.2; // 20% chance for bomb
+        let bombPenalty = 3; // Lose 3 points per bomb
+        let winThreshold = 35; // Need 35 hearts to win
         
         // Love messages
         const messages = [
@@ -670,44 +785,52 @@
         });
         
         function init() {
-            // Start music immediately without asking
+            // Hide loading screen and show page immediately
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                page1.classList.add('active');
+            }, 800);
+            
+            // Start music immediately with better handling
             startMusicImmediately();
             
             setupEventListeners();
             setupTouchSupport();
             createFloatingHearts();
-            
-            // Hide loading screen after 1 second
-            setTimeout(() => {
-                loadingScreen.classList.add('hidden');
-                page1.classList.add('active');
-            }, 1000);
         }
         
-        // Start music immediately
+        // Improved music player
         function startMusicImmediately() {
-            // Set music to play automatically
+            // Configure audio
             music.volume = 0.7;
             music.muted = false;
             
-            // Try to play immediately on page load
-            setTimeout(() => {
+            // Show loading message
+            showMusicStatus("Loading your song... 🎵");
+            
+            // Try to load and play
+            music.load();
+            
+            // Event listeners for audio
+            music.addEventListener('canplaythrough', function() {
+                showMusicStatus("Playing: Ji Chanta Matina 🎶");
+                
+                // Try to play immediately
                 const playPromise = music.play();
                 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
                         musicPlaying = true;
-                        musicLoaded = true;
-                        console.log("Music playing automatically!");
                         musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        showMusicStatus("Music playing! 💖");
                     }).catch(error => {
-                        console.log("Auto-play blocked, will play on interaction");
-                        // Music will play on first user interaction
+                        console.log("Auto-play prevented:", error);
+                        showMusicStatus("Tap to play music 👆");
+                        // Will play on user interaction
                     });
                 }
-            }, 500);
+            });
             
-            // Update music status
             music.addEventListener('play', function() {
                 musicPlaying = true;
                 musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
@@ -718,10 +841,38 @@
                 musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
             });
             
-            // Handle errors
             music.addEventListener('error', function(e) {
-                console.error("Error loading music:", music.error);
+                console.error("Audio error:", music.error);
+                if (music.error && music.error.code === 4) {
+                    showMusicStatus("Music file not found ❌");
+                } else {
+                    showMusicStatus("Using romantic music 🎵");
+                }
             });
+            
+            // Auto-play on any user interaction
+            const enableAudio = () => {
+                if (!musicPlaying) {
+                    music.play().then(() => {
+                        musicPlaying = true;
+                        musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        showMusicStatus("Music started! 💖");
+                    });
+                }
+            };
+            
+            // Add multiple interaction listeners
+            document.addEventListener('click', enableAudio, { once: true });
+            document.addEventListener('touchstart', enableAudio, { once: true });
+            document.addEventListener('keydown', enableAudio, { once: true });
+        }
+        
+        function showMusicStatus(message) {
+            musicStatus.textContent = message;
+            musicStatus.classList.add('show');
+            setTimeout(() => {
+                musicStatus.classList.remove('show');
+            }, 3000);
         }
         
         // Setup Event Listeners
@@ -745,28 +896,11 @@
             // Retry Button
             retryBtn.addEventListener('click', restartGame);
             retryBtn.addEventListener('touchend', restartGame);
-            
-            // Start music on any user interaction if not playing
-            const startMusicOnInteraction = (e) => {
-                if (!musicPlaying && musicLoaded) {
-                    music.volume = 0.7;
-                    music.play().then(() => {
-                        musicPlaying = true;
-                        musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                    });
-                }
-            };
-            
-            document.addEventListener('click', startMusicOnInteraction, { once: true });
-            document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
         }
         
         // Setup Touch Support
         function setupTouchSupport() {
             document.addEventListener('contextmenu', (e) => e.preventDefault());
-            
-            heartContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
-            heartContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
         }
         
         // Handle YES click/tap
@@ -776,10 +910,11 @@
             yesClicked = true;
             
             // Ensure music is playing
-            if (!musicPlaying && musicLoaded) {
+            if (!musicPlaying) {
                 music.volume = 0.7;
                 music.play().then(() => {
                     musicPlaying = true;
+                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
                 });
             }
             
@@ -824,17 +959,16 @@
             e.preventDefault();
             e.stopPropagation();
             
-            if (!musicLoaded) {
-                music.load();
-                return;
-            }
-            
             if (musicPlaying) {
                 music.pause();
+                showMusicStatus("Music paused");
             } else {
                 music.volume = 0.7;
                 music.play().then(() => {
                     musicPlaying = true;
+                    showMusicStatus("Music playing");
+                }).catch(error => {
+                    showMusicStatus("Tap page to enable audio");
                 });
             }
         }
@@ -878,7 +1012,7 @@
             typeChar();
         }
         
-        // Start Love Game - HARD MODE
+        // Start Love Game - WITH BOMBS
         function startLoveGame() {
             if (gameStarted) return;
             
@@ -886,14 +1020,12 @@
             gameStarted = true;
             gameActive = true;
             score = 0;
-            missed = 0;
-            accuracy = 0;
-            timeLeft = 60;
-            totalHearts = 0;
-            movingHearts = [];
+            timeLeft = 40;
+            bombsHit = 0;
+            activeObjects = [];
             
-            // Clear container
-            heartContainer.innerHTML = '<div class="timer" id="timer">60s</div><div class="game-over" id="gameOver"><h2 id="gameResult">🎉 You Won!</h2><p id="gameMessage">You proved your love! 💖</p><button class="retry-btn" id="retryBtn">Try Again 💘</button></div>';
+            // Clear container and recreate
+            heartContainer.innerHTML = '<div class="timer" id="timer">40s</div><div class="game-over" id="gameOver"><h2 id="gameResult">🎉 You Won!</h2><p id="gameMessage">You proved your love! 💖</p><button class="retry-btn" id="retryBtn">Try Again 💘</button></div>';
             
             // Reattach event listeners
             document.getElementById('retryBtn').addEventListener('click', restartGame);
@@ -902,174 +1034,192 @@
             // Update displays
             updateStats();
             timerDisplay.textContent = `${timeLeft}s`;
+            timerDisplay.className = 'timer';
             
             // Start game timer
             gameTimer = setInterval(updateTimer, 1000);
             
-            // Start creating hearts
-            createHardHearts();
+            // Start creating game objects (hearts and bombs)
+            createGameObjects();
         }
         
-        // Create hearts for hard mode
-        function createHardHearts() {
+        // Create game objects (hearts and bombs)
+        function createGameObjects() {
             if (!gameActive) return;
             
-            const heartCount = 3; // Create 3 hearts at once
-            for (let i = 0; i < heartCount; i++) {
-                setTimeout(() => createMovingHeart(), i * 300);
+            // Create 2-3 objects at once
+            const objectCount = Math.floor(Math.random() * 2) + 2;
+            
+            for (let i = 0; i < objectCount; i++) {
+                setTimeout(() => {
+                    if (gameActive) {
+                        // Decide if this is a bomb (20% chance)
+                        const isBomb = Math.random() < bombChance;
+                        createGameObject(isBomb);
+                    }
+                }, i * 300);
             }
             
-            // Create more hearts faster
+            // Continue creating objects faster as game progresses
+            const speed = Math.max(500, 1000 - (score * 10)); // Gets faster with score
             if (gameActive) {
-                setTimeout(createHardHearts, heartSpeed);
+                setTimeout(createGameObjects, speed);
             }
         }
         
-        // Create a moving heart
-        function createMovingHeart() {
+        // Create a single game object (heart or bomb)
+        function createGameObject(isBomb) {
             if (!gameActive) return;
             
-            totalHearts++;
+            const object = document.createElement('div');
+            const id = Date.now() + Math.random();
             
-            const heart = document.createElement('div');
-            heart.innerHTML = '💖';
-            heart.className = 'game-heart';
+            if (isBomb) {
+                object.innerHTML = '💣';
+                object.className = 'game-bomb';
+                object.title = 'Click to avoid! -3 points';
+            } else {
+                object.innerHTML = '💖';
+                object.className = 'game-heart';
+                object.title = 'Click to collect! +1 point';
+            }
             
             // Random starting position
-            const startX = Math.random() * 80 + 10;
-            const startY = Math.random() * 70 + 15;
-            heart.style.left = startX + '%';
-            heart.style.top = startY + '%';
+            const startX = Math.random() * 75 + 10;
+            const startY = Math.random() * 70 + 10;
+            object.style.left = startX + '%';
+            object.style.top = startY + '%';
             
-            // Smaller size
-            heart.style.fontSize = Math.random() * 15 + 20 + 'px';
+            // Random movement
+            const speed = 0.5 + Math.random() * 1.5;
+            const angle = Math.random() * Math.PI * 2;
+            const moveX = Math.cos(angle) * speed;
+            const moveY = Math.sin(angle) * speed;
             
-            // Random movement direction
-            const moveX = (Math.random() - 0.5) * 4;
-            const moveY = (Math.random() - 0.5) * 4;
-            
-            // Add to moving hearts array
-            const heartData = {
-                element: heart,
+            const objectData = {
+                element: object,
+                id: id,
+                isBomb: isBomb,
                 x: startX,
                 y: startY,
                 moveX: moveX,
                 moveY: moveY,
-                life: heartLife,
-                missed: false
+                life: 4000, // 4 seconds lifespan
+                collected: false
             };
             
-            movingHearts.push(heartData);
+            activeObjects.push(objectData);
             
-            // Touch/click events
-            heart.addEventListener('touchstart', (e) => {
+            // Click/Touch events
+            object.addEventListener('click', (e) => {
                 e.preventDefault();
-                heart.style.transform = 'scale(1.3)';
+                handleObjectClick(objectData);
             });
             
-            heart.addEventListener('touchend', (e) => {
+            object.addEventListener('touchend', (e) => {
                 e.preventDefault();
-                collectHeart(heartData);
+                handleObjectClick(objectData);
             });
             
-            heart.addEventListener('click', (e) => {
-                e.preventDefault();
-                collectHeart(heartData);
-            });
+            heartContainer.appendChild(object);
             
-            heartContainer.appendChild(heart);
-            
-            // Remove heart after time if not collected
+            // Remove object after lifespan
             setTimeout(() => {
-                if (!heartData.missed && gameActive) {
-                    heartData.missed = true;
-                    heart.classList.add('heart-missed');
-                    missed++;
-                    updateStats();
+                if (!objectData.collected && object.parentNode) {
+                    object.remove();
+                    activeObjects = activeObjects.filter(obj => obj.id !== id);
                     
-                    setTimeout(() => {
-                        if (heart.parentNode) {
-                            heart.remove();
-                            movingHearts = movingHearts.filter(h => h !== heartData);
-                        }
-                    }, 500);
+                    // If it was a heart and wasn't collected, it counts as missed
+                    if (!objectData.isBomb) {
+                        // Optional: You could penalize for missed hearts
+                    }
                 }
-            }, heartLife);
+            }, objectData.life);
         }
         
-        // Update moving hearts
-        function updateMovingHearts() {
+        // Handle object click
+        function handleObjectClick(objectData) {
+            if (objectData.collected || !gameActive) return;
+            
+            objectData.collected = true;
+            
+            if (objectData.isBomb) {
+                // BOMB clicked - PENALTY
+                score = Math.max(0, score - bombPenalty); // Don't go below 0
+                bombsHit++;
+                createBombExplosion(objectData.element.getBoundingClientRect());
+                showMusicStatus("Bomb! -3 points 💣");
+            } else {
+                // HEART clicked - REWARD
+                score++;
+                createHeartAnimation(objectData.element.getBoundingClientRect());
+            }
+            
+            // Remove object
+            if (objectData.element.parentNode) {
+                objectData.element.remove();
+                activeObjects = activeObjects.filter(obj => obj.id !== objectData.id);
+            }
+            
+            // Update game state
+            updateStats();
+            
+            // Update love meter
+            const progress = Math.min((score / winThreshold) * 100, 100);
+            loveMeter.style.width = progress + '%';
+            loveMeter.textContent = Math.round(progress) + '%';
+            
+            // Check win/lose conditions
+            if (score >= winThreshold) {
+                winGame();
+            }
+        }
+        
+        // Update moving objects
+        function updateMovingObjects() {
             if (!gameActive) return;
             
-            movingHearts.forEach(heartData => {
-                if (heartData.missed) return;
+            activeObjects.forEach(obj => {
+                if (obj.collected) return;
                 
-                // Move heart
-                heartData.x += heartData.moveX;
-                heartData.y += heartData.moveY;
+                // Move object
+                obj.x += obj.moveX;
+                obj.y += obj.moveY;
                 
                 // Bounce off walls
-                if (heartData.x < 5 || heartData.x > 95) {
-                    heartData.moveX *= -1;
+                if (obj.x < 5 || obj.x > 90) {
+                    obj.moveX *= -1;
+                    obj.x = Math.max(5, Math.min(90, obj.x));
                 }
-                if (heartData.y < 10 || heartData.y > 90) {
-                    heartData.moveY *= -1;
+                if (obj.y < 5 || obj.y > 85) {
+                    obj.moveY *= -1;
+                    obj.y = Math.max(5, Math.min(85, obj.y));
                 }
                 
                 // Update position
-                heartData.element.style.left = heartData.x + '%';
-                heartData.element.style.top = heartData.y + '%';
+                obj.element.style.left = obj.x + '%';
+                obj.element.style.top = obj.y + '%';
                 
-                // Randomly change direction sometimes
+                // Random direction change occasionally
                 if (Math.random() < 0.02) {
-                    heartData.moveX = (Math.random() - 0.5) * 4;
-                    heartData.moveY = (Math.random() - 0.5) * 4;
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.sqrt(obj.moveX * obj.moveX + obj.moveY * obj.moveY);
+                    obj.moveX = Math.cos(angle) * speed;
+                    obj.moveY = Math.sin(angle) * speed;
                 }
             });
             
             // Continue animation
             if (gameActive) {
-                requestAnimationFrame(updateMovingHearts);
-            }
-        }
-        
-        // Collect heart
-        function collectHeart(heartData) {
-            if (heartData.missed || !gameActive) return;
-            
-            heartData.missed = true;
-            score++;
-            
-            // Create collection effect
-            createHeartAnimation(heartData.element.getBoundingClientRect());
-            
-            // Remove heart
-            if (heartData.element.parentNode) {
-                heartData.element.remove();
-                movingHearts = movingHearts.filter(h => h !== heartData);
-            }
-            
-            // Update stats and love meter
-            updateStats();
-            
-            // Update love meter (harder: need 50 hearts for 100%)
-            const progress = Math.min((score / 50) * 100, 100);
-            loveMeter.style.width = progress + '%';
-            loveMeter.textContent = Math.round(progress) + '%';
-            
-            // Check win condition
-            if (score >= 50) {
-                winGame();
+                requestAnimationFrame(updateMovingObjects);
             }
         }
         
         // Update game stats
         function updateStats() {
             scoreDisplay.textContent = score;
-            missedDisplay.textContent = missed;
-            
-            accuracy = totalHearts > 0 ? Math.round((score / (score + missed)) * 100) : 0;
-            accuracyDisplay.textContent = accuracy + '%';
+            timeDisplay.textContent = timeLeft;
+            bombsDisplay.textContent = bombsHit;
         }
         
         // Update timer
@@ -1079,18 +1229,23 @@
             timeLeft--;
             timerDisplay.textContent = `${timeLeft}s`;
             
-            if (timeLeft <= 0) {
-                endGame();
+            // Update timer styling based on time
+            if (timeLeft <= 10) {
+                timerDisplay.className = 'timer danger';
+            } else if (timeLeft <= 20) {
+                timerDisplay.className = 'timer warning';
             }
             
-            // Increase difficulty as time runs out
-            if (timeLeft <= 30) {
-                heartSpeed = 600; // Even faster
-                heartLife = 1500; // Even shorter life
+            // Increase bomb chance as time runs out
+            if (timeLeft <= 20) {
+                bombChance = 0.3; // 30% chance
             }
-            if (timeLeft <= 15) {
-                heartSpeed = 400;
-                heartLife = 1200;
+            if (timeLeft <= 10) {
+                bombChance = 0.4; // 40% chance
+            }
+            
+            if (timeLeft <= 0) {
+                endGame();
             }
         }
         
@@ -1100,25 +1255,27 @@
             clearInterval(gameTimer);
             
             gameResult.textContent = '🎉 YOU WIN! 💖';
-            gameMessage.textContent = `You collected ${score} hearts with ${accuracy}% accuracy!\nMy heart is completely yours! 💕`;
+            gameMessage.textContent = `You collected ${score} hearts!\nOnly ${bombsHit} bombs hit!\n Nice bebu💕`;
             gameOverScreen.classList.add('active');
             
             showConfetti();
+            playWinSound();
+            
             setTimeout(() => {
-                alert('🎉 You proved your love! You are amazing! 💖\n\nThank you bebu malai maya garna ko lagi. love you bebu💕');
+                showMusicStatus("You won my heart! love you kaluu💖");
             }, 1000);
         }
-        
+       
         // End game (time's up)
         function endGame() {
             gameActive = false;
             clearInterval(gameTimer);
             
-            if (score >= 50) {
+            if (score >= winThreshold) {
                 winGame();
             } else {
                 gameResult.textContent = '⏰ TIME\'S UP!';
-                gameMessage.textContent = `You collected ${score} hearts (need 50).\nTry again to win my heart! 💘`;
+                gameMessage.textContent = `You collected ${score} hearts (need ${winThreshold}).\n${bombsHit} bombs hit you.\n Haha feri try gara! 💘`;
                 gameOverScreen.classList.add('active');
             }
         }
@@ -1126,56 +1283,95 @@
         // Restart game
         function restartGame() {
             gameOverScreen.classList.remove('active');
+            gameStarted = false;
             startLoveGame();
         }
         
-        // Handle touch events for game area
-        let touchStartX = 0;
-        let touchStartY = 0;
-        
-        function handleTouchStart(e) {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }
-        
-        function handleTouchEnd(e) {
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
-            
-            const deltaX = Math.abs(touchEndX - touchStartX);
-            const deltaY = Math.abs(touchEndY - touchStartY);
-            
-            if (deltaX < 10 && deltaY < 10) {
-                const element = document.elementFromPoint(touchEndX, touchEndY);
-                if (element && element.classList.contains('game-heart')) {
-                    element.click();
-                }
-            }
-        }
-        
-        // Create Heart Animation when collected
+        // Create Heart Animation
         function createHeartAnimation(position) {
             const heart = document.createElement('div');
             heart.innerHTML = '💖';
             heart.style.position = 'fixed';
             heart.style.left = position.x + 'px';
             heart.style.top = position.y + 'px';
-            heart.style.fontSize = '30px';
+            heart.style.fontSize = '35px';
             heart.style.opacity = '1';
-            heart.style.transition = 'all 0.5s ease-out';
+            heart.style.transition = 'all 0.6s ease-out';
             heart.style.zIndex = '1000';
             heart.style.pointerEvents = 'none';
             
             document.body.appendChild(heart);
             
             setTimeout(() => {
-                heart.style.transform = 'translateY(-60px) scale(1.5)';
+                heart.style.transform = 'translateY(-70px) scale(1.8)';
                 heart.style.opacity = '0';
             }, 10);
             
             setTimeout(() => {
                 heart.remove();
-            }, 800);
+            }, 700);
+        }
+        
+        // Create Bomb Explosion
+        function createBombExplosion(position) {
+            // Create explosion effect
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.innerHTML = '💥';
+                particle.style.position = 'fixed';
+                particle.style.left = position.x + 'px';
+                particle.style.top = position.y + 'px';
+                particle.style.fontSize = '20px';
+                particle.style.opacity = '1';
+                particle.style.zIndex = '1000';
+                particle.style.pointerEvents = 'none';
+                
+                document.body.appendChild(particle);
+                
+                // Animate in different directions
+                const angle = (Math.PI * 2 * i) / 8;
+                const distance = 50;
+                const targetX = position.x + Math.cos(angle) * distance;
+                const targetY = position.y + Math.sin(angle) * distance;
+                
+                particle.animate([
+                    { transform: 'scale(1) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1.5) rotate(180deg)`, opacity: 0 }
+                ], {
+                    duration: 800,
+                    easing: 'ease-out'
+                });
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 800);
+            }
+        }
+        
+        // Play win sound
+        function playWinSound() {
+            // Create a victory sound using Web Audio API
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Play victory tune
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } catch (e) {
+                console.log("Web Audio not supported");
+            }
         }
         
         // Create Floating Hearts Background
@@ -1196,12 +1392,12 @@
                         heart.remove();
                     }
                 }, 5000);
-            }, 600);
+            }, 500);
         }
         
         // Show Confetti
         function showConfetti() {
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 120; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
@@ -1226,7 +1422,7 @@
                             confetti.remove();
                         }
                     };
-                }, i * 15);
+                }, i * 20);
             }
         }
         
@@ -1236,13 +1432,17 @@
             return colors[Math.floor(Math.random() * colors.length)];
         }
         
-        // Start heart movement animation
-        function startHeartMovement() {
-            updateMovingHearts();
+        // Start object movement animation
+        function startObjectMovement() {
+            updateMovingObjects();
         }
         
-        // Start heart movement when game starts
-        setTimeout(startHeartMovement, 1000);
+        // Start movement when game starts
+        setTimeout(() => {
+            if (gameActive) {
+                startObjectMovement();
+            }
+        }, 100);
     </script>
 </body>
 </html>
