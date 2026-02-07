@@ -4,40 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Propose Day ❤️</title>
-
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI",sans-serif; }
-body { height:100vh; background: linear-gradient(135deg, #ff5f6d, #ffc371); display:flex; justify-content:center; align-items:center; overflow:hidden; color:white; position:relative;}
-.card { background: rgba(255,255,255,0.18); backdrop-filter: blur(12px); border-radius:25px; padding:40px 30px; width:90%; max-width:420px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.25); animation:fadeIn 1.5s ease;}
-h1 { font-size:2.2rem; margin-bottom:10px; }
-.name { font-size:1.3rem; font-weight:bold; margin-bottom:15px; color:#fff; text-shadow:0 0 8px #fff,0 0 20px #ff4d6d; animation: glow 2s ease-in-out infinite alternate;}
+body { height:100vh; background: linear-gradient(135deg, #ff5f6d, #ffc371); display:flex; justify-content:center; align-items:center; overflow:hidden; color:white; position:relative; font-size:16px;}
+.card { background: rgba(255,255,255,0.18); backdrop-filter: blur(12px); border-radius:25px; padding:30px 20px; width:90%; max-width:400px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.25); animation:fadeIn 1.5s ease;}
+h1 { font-size:2rem; margin-bottom:10px; }
+.name { font-size:1.2rem; font-weight:bold; margin-bottom:15px; color:#fff; text-shadow:0 0 8px #fff,0 0 20px #ff4d6d; animation: glow 2s ease-in-out infinite alternate;}
 @keyframes glow {0% {text-shadow:0 0 8px #fff,0 0 20px #ff4d6d;} 100% {text-shadow:0 0 20px #fff,0 0 30px #ff4d6d;}}
-p { font-size:1.05rem; line-height:1.7; margin-bottom:18px; opacity:0;}
-.buttons { display:flex; justify-content:center; gap:15px; position:relative;}
-button { border:none; padding:12px 26px; border-radius:30px; font-size:1rem; cursor:pointer; transition:0.3s ease;}
-#yesBtn { background:white; color:#ff4d6d;}
-#yesBtn:hover { transform:scale(1.08); background:#ffe1e9;}
-#noBtn { background:#ff4d6d; color:white;}
+p { font-size:1rem; line-height:1.6; margin-bottom:15px; opacity:0;}
+.buttons { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:10px; }
+button { border:none; padding:10px 20px; border-radius:30px; font-size:1rem; cursor:pointer; transition:0.3s ease;}
+#yesBtn { background:white; color:#ff4d6d; }
+#yesBtn:hover { transform:scale(1.08); background:#ffe1e9; }
+#noBtn { background:#ff4d6d; color:white; }
 .hidden { display:none; }
-.heart { position:fixed; bottom:-20px; font-size:20px; animation:floatUp 5s linear forwards; opacity:0.9;}
-.signature { margin-top:20px; font-size:1rem; font-weight:bold; opacity:0.8;}
-#loveMeterContainer { width:80%; max-width:300px; height:20px; background:rgba(255,255,255,0.3); border-radius:10px; margin:15px auto; overflow:hidden;}
-#loveMeter { height:100%; width:0%; background:#ff4d6d; border-radius:10px; transition:width 0.3s ease;}
-
-@keyframes fadeIn { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+.heart { position:fixed; bottom:-20px; font-size:20px; animation:floatUp 5s linear forwards; opacity:0.9; }
+.signature { margin-top:15px; font-size:0.9rem; font-weight:bold; opacity:0.8; }
+#loveMeterContainer { width:80%; max-width:300px; height:18px; background:rgba(255,255,255,0.3); border-radius:10px; margin:10px auto; overflow:hidden; }
+#loveMeter { height:100%; width:0%; background:#ff4d6d; border-radius:10px; transition:width 0.3s ease; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
 @keyframes floatUp { 0%{transform:translateY(0) scale(1) rotate(0deg); opacity:1;} 100%{transform:translateY(-100vh) scale(1.6) rotate(360deg); opacity:0;} }
+@media(max-width:400px){
+  .card{padding:20px 15px;}
+  h1{font-size:1.8rem;}
+  .name{font-size:1.1rem;}
+  button{padding:8px 15px; font-size:0.9rem;}
+  #loveMeterContainer{height:16px;}
+}
 </style>
 </head>
-
 <body>
 
-<!-- 🎵 Background Music -->
 <audio id="bgMusic" loop>
   <source src="Ji Chanta Matina.m4a" type="audio/mp4">
   Your browser does not support audio.
 </audio>
 
-<!-- Love Meter -->
 <div id="loveMeterContainer">
   <div id="loveMeter"></div>
 </div>
@@ -51,8 +53,8 @@ button { border:none; padding:12px 26px; border-radius:30px; font-size:1rem; cur
   <p id="line3"><strong>Will you be mine forever? 💍</strong></p>
 
   <div class="buttons">
-    <button id="yesBtn" onclick="sayYes()">YES ❤️</button>
-    <button id="noBtn" onmouseover="escapeNo()">NO 🙈</button>
+    <button id="yesBtn">YES ❤️</button>
+    <button id="noBtn">NO 🙈</button>
   </div>
 
   <div id="loveMessage" class="hidden">
@@ -66,48 +68,52 @@ button { border:none; padding:12px 26px; border-radius:30px; font-size:1rem; cur
 <script>
 let love = 0;
 
-// Only start music when YES is clicked
-function startMusic() {
-  const music = document.getElementById("bgMusic");
-  music.volume = 0.6;
-  music.play().catch(()=>console.log("Click YES to play music"));
-}
-
-// Typing effect for proposal lines
-function typeText() {
-  const lines = ["line1","line2","line3"];
-  const text = [
-    "From the moment you entered my life, my world became warmer and brighter.",
-    "I don’t want perfect days, I just want you in every day.",
-    "Will you be mine forever? 💍"
-  ];
-  let i=0,j=0;
-  function type() {
-    if(j<text[i].length){
-      document.getElementById(lines[i]).innerHTML += text[i][j];
-      j++; setTimeout(type,40);
-    } else { i++; j=0; if(i<lines.length){document.getElementById(lines[i]).style.opacity=1; type();}}
-  }
-  document.getElementById(lines[0]).style.opacity=1;
-  type();
-}
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 
 // YES button click
-function sayYes(){
+yesBtn.addEventListener("click",()=>{
   document.getElementById("loveMessage").classList.remove("hidden");
   startMusic();
   typeText();
   createHearts();
   startLoveGame();
   showMessagesSequential();
-}
+});
 
 // NO button dodge forever
+noBtn.addEventListener("mouseover", escapeNo);
+
+function startMusic(){
+  const music = document.getElementById("bgMusic");
+  music.volume=0.6;
+  music.play().catch(()=>console.log("Click YES to play music"));
+}
+
+// Typing effect
+function typeText(){
+  const lines=["line1","line2","line3"];
+  const text=[
+    "From the moment you entered my life, my world became warmer and brighter.",
+    "I don’t want perfect days, I just want you in every day.",
+    "Will you be mine forever? 💍"
+  ];
+  let i=0,j=0;
+  function type(){
+    if(j<text[i].length){
+      document.getElementById(lines[i]).innerHTML+=text[i][j];
+      j++; setTimeout(type,40);
+    }else{i++; j=0; if(i<lines.length){document.getElementById(lines[i]).style.opacity=1; type();}}
+  }
+  document.getElementById(lines[0]).style.opacity=1;
+  type();
+}
+
+// NO button logic
 function escapeNo(){
-  const noBtn = document.getElementById("noBtn");
-  const rect = noBtn.getBoundingClientRect();
-  const maxX = window.innerWidth - rect.width - 10;
-  const maxY = window.innerHeight - rect.height - 10;
+  const rect=noBtn.getBoundingClientRect();
+  const maxX=window.innerWidth - rect.width -10;
+  const maxY=window.innerHeight - rect.height -10;
   noBtn.style.position="fixed";
   noBtn.style.left=Math.random()*maxX+"px";
   noBtn.style.top=Math.random()*maxY+"px";
@@ -115,7 +121,7 @@ function escapeNo(){
   noBtn.style.transform=`rotate(${Math.random()*30-15}deg)`;
 }
 
-// Floating hearts animation
+// Floating hearts
 function createHearts(){
   setInterval(()=>{
     const heart=document.createElement("div");
@@ -127,7 +133,7 @@ function createHearts(){
   },250);
 }
 
-// Sequential love messages after YES
+// Sequential messages
 function showMessagesSequential(){
   const msgs=["msg1","msg2","msg3"];
   let i=0;
@@ -149,7 +155,7 @@ function showMessagesSequential(){
   showNext();
 }
 
-// Mini-game: catch hearts for love meter
+// Mini-game: catch hearts
 function startLoveGame(){
   setInterval(()=>{
     const heart=document.createElement("div");
@@ -170,6 +176,5 @@ function startLoveGame(){
   },1500);
 }
 </script>
-
 </body>
 </html>
