@@ -274,41 +274,36 @@
         /* Heart Styling */
         .game-heart {
             position: absolute;
-            font-size: 28px;
+            font-size: 32px;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 10;
             user-select: none;
             -webkit-user-select: none;
-            animation: pulse 1.2s infinite alternate;
+            animation: floatHeart 2s infinite ease-in-out;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.15); }
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-8px) scale(1.05); }
         }
         
         /* Bomb Styling */
         .game-bomb {
             position: absolute;
-            font-size: 30px;
+            font-size: 34px;
             cursor: pointer;
             z-index: 10;
             user-select: none;
             -webkit-user-select: none;
-            animation: shake 0.4s infinite alternate, rotateBomb 2.5s linear infinite;
+            animation: shakeBomb 0.8s infinite alternate;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         
-        @keyframes shake {
-            0% { transform: translateX(-3px) rotate(-5deg); }
-            100% { transform: translateX(3px) rotate(5deg); }
-        }
-        
-        @keyframes rotateBomb {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes shakeBomb {
+            0% { transform: translateX(-2px) rotate(-3deg); }
+            100% { transform: translateX(2px) rotate(3deg); }
         }
         
         .bomb-warning {
@@ -320,13 +315,13 @@
             font-weight: bold;
             margin: 10px auto;
             display: inline-block;
-            animation: warningPulse 0.8s infinite;
+            animation: warningPulse 1s infinite;
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
         @keyframes warningPulse {
             0% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
+            50% { opacity: 1; transform: scale(1.03); }
             100% { opacity: 0.8; transform: scale(1); }
         }
         
@@ -356,12 +351,12 @@
         
         @keyframes timerWarning {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
         }
         
         @keyframes timerDanger {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
         }
         
         /* Difficulty Level */
@@ -549,7 +544,7 @@
         
         @keyframes bounce {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-20px); }
+            100% { transform: translateY(-15px); }
         }
         
         .game-over h2 {
@@ -637,7 +632,7 @@
             }
             
             .game-heart, .game-bomb {
-                font-size: 24px;
+                font-size: 28px;
             }
             
             .stat-box {
@@ -762,7 +757,7 @@
             </div>
             <div class="buttons">
                 <button id="goGameBtn">
-                    <i class="fas fa-gamepad"></i> ULTIMATE LOVE CHALLENGE 💖
+                    <i class="fas fa-gamepad"></i> LOVE CHALLENGE 💖
                 </button>
             </div>
         </div>
@@ -770,12 +765,12 @@
         <!-- Page 3: Mini-game -->
         <div id="page3" class="card">
             <h1>Prove Your Love 💕</h1>
-            <p class="difficulty">Try gara😁😁💣</p>
+            <p class="difficulty">CHALLENGING MODE ⚡</p>
             <p>Catch hearts 💖 but avoid bombs 💣!</p>
-            <div class="bomb-warning">⚠️ 30% BOMB SPAWN RATE! -3 POINTS EACH!</div>
+            <div class="bomb-warning">⚠️ 25-30% BOMB SPAWN RATE! -3 POINTS EACH!</div>
             
             <div class="game-info">
-                <p><strong>🎯 Goal:</strong> Collect <span style="color:#ff4d6d; font-weight:bold">45 hearts</span> in <span style="color:#ff4d6d; font-weight:bold">40 seconds</span></p>
+                <p><strong>🎯 Goal:</strong> Collect <span style="color:#ff4d6d; font-weight:bold">35 hearts</span> in <span style="color:#ff4d6d; font-weight:bold">45 seconds</span></p>
                 <p><strong>💖 Hearts:</strong> +1 point each</p>
                 <p><strong>💣 Bombs:</strong> -3 points each</p>
             </div>
@@ -786,7 +781,7 @@
                     <span class="stat-label">Hearts 💖</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-value" id="timeLeft">40</span>
+                    <span class="stat-value" id="timeLeft">45</span>
                     <span class="stat-label">Seconds ⏰</span>
                 </div>
                 <div class="stat-box">
@@ -800,13 +795,13 @@
                     <div id="loveMeter"></div>
                 </div>
                 <div class="meter-text">
-                    <span>My Heart</span>
-                    <span>45 Hearts Goal</span>
+                    <span>0 Hearts</span>
+                    <span>35 Hearts Goal</span>
                 </div>
             </div>
             
             <div id="heartContainer">
-                <div class="timer" id="timer">40s</div>
+                <div class="timer" id="timer">45s</div>
                 <!-- GAME OVER SCREEN -->
                 <div class="game-over" id="gameOverScreen">
                     <div class="game-over-icon" id="gameOverIcon">🎉</div>
@@ -822,7 +817,7 @@
                     </div>
                 </div>
             </div>
-            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Be fast! Bombs appear 30% of the time! ⚡</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Tap hearts quickly but carefully! Bombs appear 25-30% of the time!</p>
         </div>
     </div>
 
@@ -867,22 +862,22 @@
         const retryBtn = document.getElementById('retryBtn');
         const backBtn = document.getElementById('backBtn');
         
-        // Game Variables - UPDATED SETTINGS
+        // Game Variables - BALANCED SETTINGS
         let yesClicked = false;
         let gameStarted = false;
         let musicPlaying = false;
         let gameActive = false;
         
-        // Game Stats - NEW SETTINGS
+        // Game Stats - BALANCED SETTINGS
         let score = 0;
-        let timeLeft = 40; // 40 SECOND TIMER
+        let timeLeft = 45; // 45 SECOND TIMER
         let bombsHit = 0;
         let gameTimer = null;
         let objectCreationInterval = null;
         let activeObjects = [];
-        let bombChance = 0.3; // 30% BOMB SPAWN RATE
+        let bombChance = 0.25; // START AT 25% BOMB SPAWN
         let bombPenalty = 3;
-        let winThreshold = 45; // NEED 45 HEARTS TO WIN
+        let winThreshold = 35; // NEED 35 HEARTS TO WIN
         
         // Love messages
         const messages = [
@@ -1110,7 +1105,7 @@
             typeChar();
         }
         
-        // Start Love Game - WITH NEW SETTINGS
+        // Start Love Game - BALANCED SETTINGS
         function startLoveGame() {
             if (gameStarted) return;
             
@@ -1118,10 +1113,10 @@
             gameStarted = true;
             gameActive = true;
             score = 0;
-            timeLeft = 40; // 40 SECONDS
+            timeLeft = 45; // 45 SECONDS
             bombsHit = 0;
             activeObjects = [];
-            bombChance = 0.3; // 30% BOMB SPAWN
+            bombChance = 0.25; // START AT 25%
             
             // Clear game over screen
             gameOverScreen.classList.remove('active');
@@ -1163,22 +1158,24 @@
             // Clear any existing interval
             if (objectCreationInterval) clearInterval(objectCreationInterval);
             
-            // Create objects at regular intervals - FASTER SPAWN FOR CHALLENGE
+            // Create objects at balanced intervals
             objectCreationInterval = setInterval(() => {
                 if (!gameActive) return;
                 
-                // Create 2-4 objects at once (more for challenge)
-                const objectCount = Math.floor(Math.random() * 3) + 2;
+                // Create 1-3 objects at once (balanced)
+                const objectCount = Math.floor(Math.random() * 2) + 1; // 1-2 objects
                 
                 for (let i = 0; i < objectCount; i++) {
                     setTimeout(() => {
                         if (gameActive) {
-                            const isBomb = Math.random() < bombChance; // 30% chance
+                            // Random bomb chance between 25-30%
+                            const currentBombChance = 0.25 + (Math.random() * 0.05);
+                            const isBomb = Math.random() < currentBombChance;
                             createGameObject(isBomb);
                         }
-                    }, i * 150);
+                    }, i * 250);
                 }
-            }, 600); // Create objects every 600ms (faster)
+            }, 900); // Create objects every 900ms (balanced speed)
         }
         
         // Create a single game object
@@ -1204,8 +1201,8 @@
             object.style.left = startX + '%';
             object.style.top = startY + '%';
             
-            // Faster movement for challenge
-            const speed = 0.8 + Math.random() * 1.5;
+            // Balanced movement speed
+            const speed = 0.5 + Math.random() * 1.0;
             const angle = Math.random() * Math.PI * 2;
             const moveX = Math.cos(angle) * speed;
             const moveY = Math.sin(angle) * speed;
@@ -1218,7 +1215,7 @@
                 y: startY,
                 moveX: moveX,
                 moveY: moveY,
-                life: 3500, // Shorter life (3.5 seconds)
+                life: 4500, // 4.5 seconds (balanced)
                 collected: false
             };
             
@@ -1273,7 +1270,7 @@
             // Update game state
             updateStats();
             
-            // Update love meter (need 45 hearts for 100%)
+            // Update love meter (need 35 hearts for 100%)
             const progress = Math.min((score / winThreshold) * 100, 100);
             loveMeter.style.width = progress + '%';
             loveMeter.textContent = Math.round(progress) + '%';
@@ -1295,13 +1292,13 @@
                 obj.x += obj.moveX;
                 obj.y += obj.moveY;
                 
-                // Bounce off walls
+                // Gentle bounce off walls
                 if (obj.x < 5 || obj.x > 90) {
-                    obj.moveX *= -1.1; // Bounce with more force
+                    obj.moveX *= -1;
                     obj.x = Math.max(5, Math.min(90, obj.x));
                 }
                 if (obj.y < 5 || obj.y > 85) {
-                    obj.moveY *= -1.1; // Bounce with more force
+                    obj.moveY *= -1;
                     obj.y = Math.max(5, Math.min(85, obj.y));
                 }
                 
@@ -1309,12 +1306,12 @@
                 obj.element.style.left = obj.x + '%';
                 obj.element.style.top = obj.y + '%';
                 
-                // Random direction change occasionally (more often for challenge)
-                if (Math.random() < 0.03) {
+                // Occasional gentle direction change
+                if (Math.random() < 0.015) {
                     const angle = Math.random() * Math.PI * 2;
                     const speed = Math.sqrt(obj.moveX * obj.moveX + obj.moveY * obj.moveY);
-                    obj.moveX = Math.cos(angle) * speed;
-                    obj.moveY = Math.sin(angle) * speed;
+                    obj.moveX = Math.cos(angle) * speed * 0.8;
+                    obj.moveY = Math.sin(angle) * speed * 0.8;
                 }
             });
             
@@ -1344,21 +1341,18 @@
             timerDisplay.textContent = `${timeLeft}s`;
             
             // Update timer styling
-            if (timeLeft <= 10) {
+            if (timeLeft <= 15) {
                 timerDisplay.className = 'timer danger';
-            } else if (timeLeft <= 20) {
+            } else if (timeLeft <= 30) {
                 timerDisplay.className = 'timer warning';
             }
             
-            // Increase bomb chance as time runs out for extra challenge
-            if (timeLeft <= 20) {
-                bombChance = 0.35; // 35% chance
+            // Gradually increase bomb chance as time runs out
+            if (timeLeft <= 30) {
+                bombChance = 0.27; // 27% chance
             }
-            if (timeLeft <= 10) {
-                bombChance = 0.4; // 40% chance
-            }
-            if (timeLeft <= 5) {
-                bombChance = 0.45; // 45% chance - VERY HARD!
+            if (timeLeft <= 15) {
+                bombChance = 0.30; // 30% chance
             }
             
             if (timeLeft <= 0) {
@@ -1372,16 +1366,21 @@
             clearInterval(gameTimer);
             clearInterval(objectCreationInterval);
             
+            // Calculate accuracy
+            const totalClicks = score + bombsHit;
+            const accuracy = totalClicks > 0 ? Math.round((score / totalClicks) * 100) : 0;
+            
             // Set win message
             gameOverIcon.textContent = '🎉';
-            gameResult.textContent = '🎉 MISSION ACCOMPLISHED! 💖';
+            gameResult.textContent = '🎉 CONGRATULATIONS! 💖';
             gameMessage.innerHTML = ` 
-                <strong>🎯 GOAL ACHIEVED!</strong><br>
-                You collected <span style="color:#ff4d6d">${score} hearts</span>!<br>
-                Only hit <span style="color:#ff4d6d">${bombsHit} bombs</span>!<br><br>
-                ⏱️ Time remaining: <span style="color:#4CAF50">${timeLeft} seconds</span><br><br>
-               love you Susma!<br>
-                Thank you bebu malai maya garna ko lagii💕
+                <strong>YOU DID IT! 🎯</strong><br>
+                Collected: <span style="color:#ff4d6d">${score} hearts</span><br>
+                Bombs hit: <span style="color:#ff4d6d">${bombsHit}</span><br>
+                Accuracy: <span style="color:#4CAF50">${accuracy}%</span><br>
+                Time left: <span style="color:#4CAF50">${timeLeft} seconds</span><br><br>
+                 Love you bebu<br>
+                Thank you bebu malai naya garna ko lagi💕
             `;
             
             // Show game over screen
@@ -1398,7 +1397,7 @@
             
             // Show success message
             setTimeout(() => {
-                showMusicStatus("You're amazing! 💖");
+                showMusicStatus("Perfect! You won my heart! 💖");
             }, 1000);
         }
         
@@ -1414,19 +1413,23 @@
                 return;
             }
             
+            // Calculate how close they were
+            const heartsNeeded = winThreshold - score;
+            const percentage = Math.round((score / winThreshold) * 100);
+            
             // Set lose message
             gameOverIcon.textContent = '💔';
             gameResult.textContent = '⏰ TIME\'S UP!';
             
-            const heartsNeeded = winThreshold - score;
             gameMessage.innerHTML = `
-                <strong>Challenge Failed!</strong><br>
-                You collected <span style="color:#ff4d6d">${score} hearts</span><br>
-                Needed <span style="color:#ff4d6d">${winThreshold}</span> to win.<br>
-                Hit <span style="color:#ff4d6d">${bombsHit} bombs</span>.<br><br>
-                You were <span style="color:#ff4d6d">${heartsNeeded} hearts</span> short!<br><br>
-                Haha feri try gara!<br>
-                Bottttttt 💘
+                <strong>So close! 😔</strong><br>
+                You collected: <span style="color:#ff4d6d">${score} hearts</span><br>
+                Needed: <span style="color:#ff4d6d">${winThreshold} hearts</span><br>
+                Progress: <span style="color:#ff4d6d">${percentage}%</span><br>
+                Bombs hit: <span style="color:#ff4d6d">${bombsHit}</span><br><br>
+                You were only <span style="color:#ff4d6d">${heartsNeeded} hearts</span> short!<br><br>
+                Feri khela 😁😁!<br>
+                botttttt 💘
             `;
             
             // Show game over screen
@@ -1437,7 +1440,7 @@
             
             // Show encouragement message
             setTimeout(() => {
-                showMusicStatus("Try again! You can do it! 💪");
+                showMusicStatus("Try again! You're almost there! 💪");
             }, 1000);
         }
         
@@ -1450,7 +1453,7 @@
         
         // RESTART GAME
         function restartGame() {
-            console.log("Restarting game with new settings...");
+            console.log("Restarting game with balanced settings...");
             
             // Hide game over screen
             gameOverScreen.classList.remove('active');
@@ -1473,7 +1476,7 @@
             heart.style.position = 'fixed';
             heart.style.left = position.x + 'px';
             heart.style.top = position.y + 'px';
-            heart.style.fontSize = '32px';
+            heart.style.fontSize = '34px';
             heart.style.opacity = '1';
             heart.style.transition = 'all 0.5s ease-out';
             heart.style.zIndex = '1000';
@@ -1482,7 +1485,7 @@
             document.body.appendChild(heart);
             
             setTimeout(() => {
-                heart.style.transform = 'translateY(-60px) scale(1.6)';
+                heart.style.transform = 'translateY(-50px) scale(1.4)';
                 heart.style.opacity = '0';
             }, 10);
             
@@ -1493,33 +1496,33 @@
         
         // Create Bomb Explosion
         function createBombExplosion(position) {
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 8; i++) {
                 const particle = document.createElement('div');
                 particle.innerHTML = '💥';
                 particle.style.position = 'fixed';
                 particle.style.left = position.x + 'px';
                 particle.style.top = position.y + 'px';
-                particle.style.fontSize = '22px';
+                particle.style.fontSize = '20px';
                 particle.style.opacity = '1';
                 particle.style.zIndex = '1000';
                 particle.style.pointerEvents = 'none';
                 
                 document.body.appendChild(particle);
                 
-                const angle = (Math.PI * 2 * i) / 10;
-                const distance = 60;
+                const angle = (Math.PI * 2 * i) / 8;
+                const distance = 50;
                 
                 particle.animate([
                     { transform: 'scale(1) rotate(0deg)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1.6) rotate(180deg)`, opacity: 0 }
+                    { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1.4) rotate(180deg)`, opacity: 0 }
                 ], {
-                    duration: 700,
+                    duration: 600,
                     easing: 'ease-out'
                 });
                 
                 setTimeout(() => {
                     particle.remove();
-                }, 700);
+                }, 600);
             }
         }
         
@@ -1533,17 +1536,16 @@
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
                 
-                // Victory tune
+                // Happy victory tune
                 oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
                 oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
                 oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
-                oscillator.frequency.setValueAtTime(1046.50, audioContext.currentTime + 0.3);
                 
                 gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
                 
                 oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.6);
+                oscillator.stop(audioContext.currentTime + 0.5);
             } catch (e) {
                 console.log("Web Audio not supported");
             }
@@ -1572,7 +1574,7 @@
         
         // Show Confetti
         function showConfetti() {
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 100; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
@@ -1597,7 +1599,7 @@
                             confetti.remove();
                         }
                     };
-                }, i * 15);
+                }, i * 20);
             }
         }
         
