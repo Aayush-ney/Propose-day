@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+here  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>For My Love 💖 |Kaluu</title>
+    <title>For My Love 💖 | Kaluu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* MOBILE FIRST DESIGN */
@@ -301,8 +301,8 @@
             color: #ff4d6d;
         }
         
-        /* Music Info */
-        .music-info {
+        /* Music Status */
+        .music-status {
             position: fixed;
             bottom: 20px;
             left: 20px;
@@ -313,22 +313,13 @@
             color: #ff4d6d;
             font-weight: 600;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            display: none;
             max-width: 200px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        /* Confetti */
-        .confetti {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            background: #ff4d6d;
-            pointer-events: none;
-            opacity: 0.8;
-            border-radius: 50%;
-        }
-        
-        /* Loading Animation */
+        /* Loading Screen */
         .loading {
             position: fixed;
             top: 0;
@@ -367,6 +358,66 @@
             color: white;
             font-size: 1.2rem;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        /* Audio Permission Prompt */
+        .audio-permission {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .audio-permission.hidden {
+            display: none;
+        }
+        
+        .permission-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ff4d6d;
+        }
+        
+        .permission-text {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            max-width: 400px;
+        }
+        
+        .permission-btn {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: #ff4d6d;
+            pointer-events: none;
+            opacity: 0.8;
+            border-radius: 50%;
         }
         
         /* Portrait/Landscape adjustments */
@@ -384,10 +435,15 @@
                 height: 250px;
             }
             
-            .music-info {
+            .music-status {
                 bottom: 85px;
                 left: 10px;
                 font-size: 0.7rem;
+                padding: 8px 12px;
+            }
+            
+            .permission-text {
+                font-size: 1rem;
             }
         }
         
@@ -430,6 +486,22 @@
     </style>
 </head>
 <body>
+    <!-- Audio Permission Prompt -->
+    <div class="audio-permission" id="audioPermission">
+        <div class="permission-icon">
+            <i class="fas fa-music"></i>
+        </div>
+        <div class="permission-text">
+            <h3>Music is ready! 🎵</h3>
+            <p>Our special song "<strong>Ji Chanta Matina</strong>" will play automatically.</p>
+            <p>Please allow audio to play for the complete romantic experience! 💖</p>
+        </div>
+        <button class="permission-btn" id="allowAudio">
+            <i class="fas fa-volume-up"></i> Allow Music
+        </button>
+        <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">Click anywhere to continue</p>
+    </div>
+    
     <!-- Loading Screen -->
     <div class="loading" id="loadingScreen">
         <div class="loader"></div>
@@ -441,9 +513,10 @@
         <i class="fas fa-music"></i>
     </div>
     
-    <!-- Music Info -->
-    <div class="music-info" id="musicInfo">
-        <i class="fas fa-headphones"></i> Playing: Ji Chanta Matina
+    <!-- Music Status -->
+    <div class="music-status" id="musicStatus">
+        <i class="fas fa-volume-up"></i>
+        <span>Playing: Ji Chanta Matina</span>
     </div>
     
     <div class="container">
@@ -501,7 +574,7 @@
     </div>
 
     <!-- Audio - Using YOUR music file -->
-    <audio id="bgMusic" loop preload="auto">
+    <audio id="bgMusic" loop preload="auto" autoplay>
         <!-- YOUR CUSTOM MUSIC FILE -->
         <source src="Ji Chanta Matina.m4a" type="audio/mp4">
         <source src="Ji Chanta Matina.mp3" type="audio/mpeg">
@@ -518,11 +591,13 @@
         const goGameBtn = document.getElementById('goGameBtn');
         const music = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
-        const musicInfo = document.getElementById('musicInfo');
+        const musicStatus = document.getElementById('musicStatus');
         const loveMessage = document.getElementById('loveMessage');
         const loveMeter = document.getElementById('loveMeter');
         const heartContainer = document.getElementById('heartContainer');
         const loadingScreen = document.getElementById('loadingScreen');
+        const audioPermission = document.getElementById('audioPermission');
+        const allowAudioBtn = document.getElementById('allowAudio');
         
         // Variables
         let yesClicked = false;
@@ -530,6 +605,7 @@
         let gameStarted = false;
         let musicPlaying = false;
         let musicLoaded = false;
+        let userInteracted = false;
         let touchStartX = 0;
         let touchStartY = 0;
         
@@ -553,65 +629,114 @@
         });
         
         function init() {
-            // Hide loading screen after 2 seconds
-            setTimeout(() => {
-                loadingScreen.classList.add('hidden');
-                page1.classList.add('active');
-            }, 2000);
-            
             setupEventListeners();
             setupTouchSupport();
             setupMusic();
             createFloatingHearts();
+            
+            // Hide loading screen after 1.5 seconds
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                audioPermission.classList.remove('hidden');
+                
+                // Try to play music immediately
+                setTimeout(() => {
+                    playMusicAutomatically();
+                }, 500);
+            }, 1500);
         }
         
-        // Setup Music
+        // Setup Music with Auto-Play
         function setupMusic() {
-            // Show that we're trying to load the custom music
-            musicInfo.style.display = 'block';
-            musicInfo.innerHTML = '<i class="fas fa-music"></i> Loading your song...';
+            // Configure audio for better mobile compatibility
+            music.volume = 0.6;
+            music.muted = false;
             
-            // Try to load the music
+            // Show that we're loading the custom music
+            musicStatus.innerHTML = '<i class="fas fa-music"></i><span>Loading your song...</span>';
+            
+            // Preload the music
             music.load();
             
             // Check if music can play
             music.addEventListener('canplaythrough', function() {
                 musicLoaded = true;
-                musicInfo.innerHTML = '<i class="fas fa-headphones"></i> Ready: Ji Chanta Matina';
+                musicStatus.innerHTML = '<i class="fas fa-headphones"></i><span>Ready: Ji Chanta Matina</span>';
                 console.log("Music loaded successfully!");
             });
             
             // Handle music errors
             music.addEventListener('error', function(e) {
                 console.error("Error loading music:", music.error);
-                musicInfo.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Using backup music';
-                musicInfo.style.background = 'rgba(255, 100, 100, 0.9)';
+                musicStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i><span>Music file not found</span>';
+                musicStatus.style.background = 'rgba(255, 100, 100, 0.9)';
                 
-                // Try backup music URL if local file fails
+                // Try backup music if local file fails
                 setTimeout(() => {
                     music.innerHTML = '<source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">';
                     music.load();
                 }, 1000);
             });
             
-            // Update music info when playing
+            // Update music status when playing
             music.addEventListener('play', function() {
-                musicInfo.innerHTML = '<i class="fas fa-volume-up"></i> Playing: Ji Chanta Matina';
-                musicInfo.style.background = 'rgba(255, 255, 255, 0.9)';
+                musicPlaying = true;
+                musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                musicStatus.innerHTML = '<i class="fas fa-volume-up"></i><span>Playing: Ji Chanta Matina</span>';
+                musicStatus.style.background = 'rgba(255, 255, 255, 0.9)';
             });
             
             music.addEventListener('pause', function() {
-                musicInfo.innerHTML = '<i class="fas fa-volume-mute"></i> Paused';
+                musicPlaying = false;
+                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                musicStatus.innerHTML = '<i class="fas fa-volume-mute"></i><span>Music Paused</span>';
+            });
+            
+            // Handle when audio ends
+            music.addEventListener('ended', function() {
+                music.currentTime = 0;
+                music.play();
             });
         }
         
-        // Setup Event Listeners for both touch and click
+        // Try to play music automatically
+        function playMusicAutomatically() {
+            if (musicLoaded && !musicPlaying) {
+                // Try to play immediately
+                const playPromise = music.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Successfully started playing
+                        musicPlaying = true;
+                        userInteracted = true;
+                        audioPermission.classList.add('hidden');
+                        page1.classList.add('active');
+                        console.log("Music playing automatically!");
+                    }).catch(error => {
+                        // Auto-play was prevented, show permission prompt
+                        console.log("Auto-play prevented, showing permission prompt");
+                        musicStatus.innerHTML = '<i class="fas fa-hand-pointer"></i><span>Tap to allow music</span>';
+                    });
+                }
+            }
+        }
+        
+        // Setup Event Listeners
         function setupEventListeners() {
-            // YES Button - Both touch and click
+            // Allow Audio Button
+            allowAudioBtn.addEventListener('click', allowMusic);
+            allowAudioBtn.addEventListener('touchend', allowMusic);
+            
+            // Allow audio on any click/tap
+            document.addEventListener('click', handleUserInteraction);
+            document.addEventListener('touchstart', handleUserInteraction);
+            
+            // YES Button
             yesBtn.addEventListener('click', handleYesClick);
             yesBtn.addEventListener('touchend', handleYesClick);
             
-            // NO Button - Mobile touch events
+            // NO Button
             noBtn.addEventListener('touchstart', moveNoButton);
             noBtn.addEventListener('click', handleNoClick);
             
@@ -622,15 +747,43 @@
             // Music Toggle
             musicToggle.addEventListener('click', toggleMusic);
             musicToggle.addEventListener('touchend', toggleMusic);
+        }
+        
+        // Handle user interaction for audio
+        function handleUserInteraction(e) {
+            if (!userInteracted) {
+                userInteracted = true;
+                allowMusic();
+                audioPermission.classList.add('hidden');
+                
+                // Show main page after user interaction
+                if (!page1.classList.contains('active')) {
+                    page1.classList.add('active');
+                }
+            }
+        }
+        
+        // Allow music playback
+        function allowMusic(e) {
+            if (e) e.preventDefault();
             
-            // Enable audio on first user interaction
-            const enableAudioOnce = () => {
-                enableAudio();
-                document.removeEventListener('touchstart', enableAudioOnce);
-                document.removeEventListener('click', enableAudioOnce);
-            };
-            document.addEventListener('touchstart', enableAudioOnce, { once: true });
-            document.addEventListener('click', enableAudioOnce, { once: true });
+            if (musicLoaded && !musicPlaying) {
+                music.volume = 0.6;
+                music.play().then(() => {
+                    musicPlaying = true;
+                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    musicStatus.innerHTML = '<i class="fas fa-volume-up"></i><span>Playing: Ji Chanta Matina</span>';
+                    userInteracted = true;
+                    audioPermission.classList.add('hidden');
+                    
+                    if (!page1.classList.contains('active')) {
+                        page1.classList.add('active');
+                    }
+                }).catch(error => {
+                    console.log("Manual play failed:", error);
+                    musicStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>Tap music button to play</span>';
+                });
+            }
         }
         
         // Setup Touch Support
@@ -649,16 +802,11 @@
             if (yesClicked) return;
             yesClicked = true;
             
-            // Play music if not already playing
+            // Ensure music is playing
             if (!musicPlaying && musicLoaded) {
                 music.volume = 0.6;
                 music.play().then(() => {
                     musicPlaying = true;
-                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                    musicInfo.innerHTML = '<i class="fas fa-volume-up"></i> Playing: Ji Chanta Matina';
-                }).catch((error) => {
-                    console.log("Music play failed:", error);
-                    musicInfo.innerHTML = '<i class="fas fa-exclamation-circle"></i> Tap to play music';
                 });
             }
             
@@ -688,7 +836,6 @@
             const maxX = card.width - noBtn.offsetWidth - 30;
             const maxY = card.height - noBtn.offsetHeight - 30;
             
-            // Move button to random position within card
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * maxY;
             
@@ -705,46 +852,20 @@
             e.stopPropagation();
             
             if (!musicLoaded) {
-                musicInfo.innerHTML = '<i class="fas fa-sync fa-spin"></i> Loading...';
+                musicStatus.innerHTML = '<i class="fas fa-sync fa-spin"></i><span>Loading...</span>';
                 music.load();
-                setTimeout(() => {
-                    if (music.error) {
-                        musicInfo.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Music file not found';
-                        return;
-                    }
-                }, 1000);
                 return;
             }
             
             if (musicPlaying) {
                 music.pause();
-                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                musicInfo.innerHTML = '<i class="fas fa-volume-mute"></i> Paused';
             } else {
                 music.volume = 0.6;
                 music.play().then(() => {
                     musicPlaying = true;
-                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                    musicInfo.innerHTML = '<i class="fas fa-volume-up"></i> Playing: Ji Chanta Matina';
-                }).catch((error) => {
-                    console.log("Play failed:", error);
-                    musicInfo.innerHTML = '<i class="fas fa-exclamation-circle"></i> Tap page to enable audio';
-                });
-            }
-            musicPlaying = !musicPlaying;
-        }
-        
-        // Enable audio
-        function enableAudio() {
-            if (!musicPlaying && musicLoaded) {
-                music.volume = 0.4;
-                music.play().then(() => {
-                    musicPlaying = true;
-                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                    musicInfo.innerHTML = '<i class="fas fa-volume-up"></i> Playing: Ji Chanta Matina';
-                }).catch((error) => {
-                    console.log("Auto-play blocked:", error);
-                    musicInfo.innerHTML = '<i class="fas fa-hand-pointer"></i> Tap music button to play';
+                }).catch(error => {
+                    console.log("Toggle play failed:", error);
+                    musicStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>Tap page to enable audio</span>';
                 });
             }
         }
@@ -796,10 +917,8 @@
             loveMeter.style.width = '0%';
             loveMeter.textContent = '';
             
-            // Clear any existing hearts
             heartContainer.innerHTML = '';
             
-            // Create hearts to tap
             function createClickableHeart() {
                 const heart = document.createElement('div');
                 heart.innerHTML = '💖';
@@ -809,7 +928,6 @@
                 heart.style.fontSize = Math.random() * 20 + 35 + 'px';
                 heart.style.opacity = '0.9';
                 
-                // Touch events for mobile
                 heart.addEventListener('touchstart', (e) => {
                     e.preventDefault();
                     heart.style.transform = 'scale(1.2)';
@@ -820,7 +938,6 @@
                     collectHeart(heart);
                 });
                 
-                // Click events for desktop
                 heart.addEventListener('click', (e) => {
                     e.preventDefault();
                     collectHeart(heart);
@@ -828,7 +945,6 @@
                 
                 heartContainer.appendChild(heart);
                 
-                // Remove heart after 5 seconds if not tapped
                 setTimeout(() => {
                     if (heart.parentNode) {
                         heart.style.opacity = '0';
@@ -840,43 +956,32 @@
                 }, 5000);
             }
             
-            // Collect heart function
             function collectHeart(heart) {
-                // Increase love
                 love += 8;
                 if (love > 100) love = 100;
                 
-                // Update meter
                 loveMeter.style.width = love + '%';
                 loveMeter.textContent = love + '%';
                 
-                // Create collection animation
                 createHeartAnimation(heart.getBoundingClientRect());
-                
-                // Remove heart
                 heart.remove();
                 
-                // Check if love is full
                 if (love >= 100) {
                     showConfetti();
                     setTimeout(() => {
-                        alert('🎉 You filled our love meter! My heart is completely yours! 💖\n\nNow will you marry me? 💍');
+                        alert('🎉 You filled our love meter! My heart is completely yours! 💖\n\nThank you bebu malai maya garna ko lagi');
                     }, 500);
                 }
                 
-                // Create new heart after a delay
                 setTimeout(createClickableHeart, 300);
             }
             
-            // Start creating hearts
             for (let i = 0; i < 4; i++) {
                 setTimeout(createClickableHeart, i * 800);
             }
             
-            // Keep creating hearts
             const heartInterval = setInterval(createClickableHeart, 2000);
             
-            // Clear interval if page changes
             const clearIntervalOnPageChange = () => {
                 clearInterval(heartInterval);
                 document.removeEventListener('pageChanged', clearIntervalOnPageChange);
@@ -894,12 +999,10 @@
             const touchEndX = e.changedTouches[0].clientX;
             const touchEndY = e.changedTouches[0].clientY;
             
-            // Check if it was a tap (not a swipe)
             const deltaX = Math.abs(touchEndX - touchStartX);
             const deltaY = Math.abs(touchEndY - touchStartY);
             
             if (deltaX < 10 && deltaY < 10) {
-                // It's a tap, check if we tapped a heart
                 const element = document.elementFromPoint(touchEndX, touchEndY);
                 if (element && element.classList.contains('game-heart')) {
                     element.click();
@@ -922,13 +1025,11 @@
             
             document.body.appendChild(heart);
             
-            // Animate
             setTimeout(() => {
                 heart.style.transform = 'translateY(-80px) scale(1.8)';
                 heart.style.opacity = '0';
             }, 10);
             
-            // Remove after animation
             setTimeout(() => {
                 heart.remove();
             }, 1000);
@@ -947,7 +1048,6 @@
                 
                 document.body.appendChild(heart);
                 
-                // Remove after animation
                 setTimeout(() => {
                     if (heart.parentNode) {
                         heart.remove();
@@ -970,7 +1070,6 @@
                     
                     document.body.appendChild(confetti);
                     
-                    // Animate
                     const animation = confetti.animate([
                         { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
                         { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
@@ -979,7 +1078,6 @@
                         easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
                     });
                     
-                    // Remove after animation
                     animation.onfinish = () => {
                         if (confetti.parentNode) {
                             confetti.remove();
