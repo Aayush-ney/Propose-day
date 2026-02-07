@@ -767,7 +767,7 @@
             <h1>Prove Your Love 💕</h1>
             <p class="difficulty">Try gara😁😁</p>
             <p>Catch hearts 💖 but avoid bombs 💣!</p>
-            <div class="bomb-warning">⚠️ Bomb ni xa hai</div>
+            <div class="bomb-warning">⚠️😁</div>
             
             <div class="game-info">
                 <p><strong>🎯 Goal:</strong> Collect <span style="color:#ff4d6d; font-weight:bold">35 hearts</span> in <span style="color:#ff4d6d; font-weight:bold">45 seconds</span></p>
@@ -1124,9 +1124,15 @@
             // Clear container but keep timer and game over screen
             const timer = document.querySelector('.timer');
             const gameOver = document.querySelector('.game-over');
-            heartContainer.innerHTML = '';
-            if (timer) heartContainer.appendChild(timer);
-            if (gameOver) heartContainer.appendChild(gameOver);
+            
+            // Remove all objects except timer and game over screen
+            const children = heartContainer.children;
+            for (let i = children.length - 1; i >= 0; i--) {
+                const child = children[i];
+                if (!child.classList.contains('timer') && !child.classList.contains('game-over')) {
+                    heartContainer.removeChild(child);
+                }
+            }
             
             // Update displays
             updateStats();
@@ -1138,8 +1144,14 @@
             loveMeter.textContent = '0%';
             
             // Clear any existing intervals
-            if (gameTimer) clearInterval(gameTimer);
-            if (objectCreationInterval) clearInterval(objectCreationInterval);
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+            if (objectCreationInterval) {
+                clearInterval(objectCreationInterval);
+                objectCreationInterval = null;
+            }
             
             // Start game timer
             gameTimer = setInterval(updateTimer, 1000);
@@ -1363,8 +1375,16 @@
         // WIN THE GAME
         function winGame() {
             gameActive = false;
-            clearInterval(gameTimer);
-            clearInterval(objectCreationInterval);
+            
+            // Clear intervals properly
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+            if (objectCreationInterval) {
+                clearInterval(objectCreationInterval);
+                objectCreationInterval = null;
+            }
             
             // Calculate accuracy
             const totalClicks = score + bombsHit;
@@ -1404,8 +1424,16 @@
         // END GAME (LOSE)
         function endGame() {
             gameActive = false;
-            clearInterval(gameTimer);
-            clearInterval(objectCreationInterval);
+            
+            // Clear intervals properly
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+            if (objectCreationInterval) {
+                clearInterval(objectCreationInterval);
+                objectCreationInterval = null;
+            }
             
             // Check if player won or lost
             if (score >= winThreshold) {
@@ -1447,26 +1475,79 @@
         // Clear all game objects
         function clearAllObjects() {
             const objects = heartContainer.querySelectorAll('.game-heart, .game-bomb');
-            objects.forEach(obj => obj.remove());
+            objects.forEach(obj => {
+                // Check if it's not the timer or game over screen
+                if (!obj.classList.contains('timer') && !obj.classList.contains('game-over')) {
+                    obj.remove();
+                }
+            });
             activeObjects = [];
         }
         
-        // RESTART GAME
+        // RESTART GAME - FIXED VERSION
         function restartGame() {
-            console.log("Restarting game with balanced settings...");
+            console.log("Restarting game...");
             
             // Hide game over screen
             gameOverScreen.classList.remove('active');
             
-            // Reset game started flag
+            // Reset all game variables
             gameStarted = false;
+            gameActive = false;
+            score = 0;
+            timeLeft = 45;
+            bombsHit = 0;
+            activeObjects = [];
+            bombChance = 0.25;
             
             // Clear any existing intervals
-            if (gameTimer) clearInterval(gameTimer);
-            if (objectCreationInterval) clearInterval(objectCreationInterval);
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+            if (objectCreationInterval) {
+                clearInterval(objectCreationInterval);
+                objectCreationInterval = null;
+            }
             
-            // Start fresh game
-            startLoveGame();
+            // Clear the container
+            const timerElement = document.querySelector('.timer');
+            const gameOverElement = document.querySelector('.game-over');
+            
+            // Remove all objects except timer and game over screen
+            while (heartContainer.firstChild) {
+                if (heartContainer.firstChild !== timerElement && heartContainer.firstChild !== gameOverElement) {
+                    heartContainer.removeChild(heartContainer.firstChild);
+                } else {
+                    break;
+                }
+            }
+            
+            // Reset displays
+            updateStats();
+            loveMeter.style.width = '0%';
+            loveMeter.textContent = '0%';
+            
+            // Reset timer display
+            timerDisplay.textContent = `${timeLeft}s`;
+            timerDisplay.className = 'timer';
+            
+            // Wait a moment and start fresh
+            setTimeout(() => {
+                gameStarted = true;
+                gameActive = true;
+                
+                // Start game timer
+                gameTimer = setInterval(updateTimer, 1000);
+                
+                // Start creating game objects
+                createGameObjects();
+                
+                // Start object movement
+                startObjectMovement();
+                
+                console.log("Game restarted successfully!");
+            }, 100);
         }
         
         // Create Heart Animation
